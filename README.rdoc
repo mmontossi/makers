@@ -22,7 +22,7 @@ There are only four methods available:
   Fabricators.create
   Fabricators.generate
 
-To not write Fabricators every time you can include the methods in your tests:
+To not write "Fabricators" every time you can include the methods in your tests:
   class ActiveSupport::TestCase
     include Fabricators::Methods
   end
@@ -74,7 +74,7 @@ Or a more verbose one:
 
 == Generators
 
-The idea behind the generators it's to separate them from fabricators en use them as attributes, so you would be force to not use them inside your fabricators definition ensure readability:
+The idea behind the generators it's to separate them from fabricators en use them as attributes, so you would be force to not use them inside your fabricators definition to ensure readability:
   Fabricators.define do
     generator(:email) { |n| "example#{n}@mail.com" }
     generator(:age)
@@ -89,9 +89,13 @@ The idea behind the generators it's to separate them from fabricators en use the
 Both one to many and one to many association work more naturally than factory_girl:
   Fabricators.define do
     fabricator :user do
-      posts
+      posts # Be default 1 record
+      comments 4 # You can override this if you like
     end
     fabricator :post do
+      user
+    end
+    fabricator :comment do
       user
     end
   end
