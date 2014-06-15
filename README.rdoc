@@ -1,0 +1,134 @@
+{<img src="https://badge.fury.io/rb/fabricators.png" alt="Gem Version" />}[http://badge.fury.io/rb/fabricators] {<img src="https://codeclimate.com/github/museways/fabricators.png" />}[https://codeclimate.com/github/museways/fabricators] {<img src="https://travis-ci.org/museways/fabricators.png?branch=master" alt="Build Status" />}[https://travis-ci.org/museways/fabricators] {<img src="https://gemnasium.com/museways/fabricators.png" alt="Dependency Status" />}[https://gemnasium.com/museways/fabricators]
+
+= Fabricators
+
+Minimalistic factory alternative inspired in factory_girl.
+
+= Install
+
+Put this line in your Gemfile:
+  gem 'fabricators'
+  
+Then bundle:
+  $ bundle  
+
+= Usage
+
+== Methods
+
+There are only four methods available:
+  Fabricators.attributes_for
+  Fabricators.build
+  Fabricators.create
+  Fabricators.generate
+
+To not write Fabricators every time you can include the methods in your tests:
+  class ActiveSupport::TestCase
+    include Fabricators::Methods
+  end
+
+Then you can you just:
+  attributes_for
+  build
+  create
+  generate
+
+In the first three you can pass a hash to override the defaults:
+  build :user, name: 'other'
+  create :category, title: 'other'
+
+To create lists you use the build and create methods too, just pass the desired size as second parameter:
+  build :user, 2, name: 'other'
+  create :category, 5, title: 'other'
+
+== Fabricators
+
+The way you define your fabricators should be very familiar already.
+  Fabricators.define do
+    fabricator :user do
+      name 'example'
+    end
+  end
+
+== Inehritance
+
+There are two ways of using it:
+  Fabricators.define do
+    fabricator :user do
+      name 'example'
+      fabricator :user_with_email do
+        email 'example@mail.com'
+      end
+    end
+  end
+
+Or a more verbose one:
+  Fabricators.define do
+    fabricator :user do
+      name 'example'
+    end
+    fabricator :user_with_email, parent: :user do
+      email 'example@mail.com'
+    end
+  end
+
+== Generators
+
+The idea behind the generators it's to separate them from fabricators en use them as attributes, so you would be force to not use them inside your fabricators definition ensure readability:
+  Fabricators.define do
+    generator(:email) { |n| "example#{n}@mail.com" }
+    generator(:age)
+    fabricator :user do
+      email
+      age
+    end
+  end
+
+== Associations
+
+Both one to many and one to many association work more naturally than factory_girl:
+  Fabricators.define do
+    fabricator :user do
+      posts
+    end
+    fabricator :post do
+      user
+    end
+  end
+
+== Aliases
+
+The aliases are essential to work with generators and associations when there is the need of context:
+  Fabricators.define do
+    generator(:title, aliases: [:last_name, :first_name]) { 'Example' }
+    fabricators :user, aliases: :author do
+      first_name
+      last_name
+      comments
+    end
+    fabricators :post, aliases: :comment do
+      title
+      author
+    end
+  end
+
+== Dependent attributes
+
+If you need to use some logic that depends of another attribute you can go:
+  Fabricators.define do
+    fabricators :user do
+      name 'example'
+      email { "#{name}@mail.com" }
+    end
+  end
+
+== Callbacks
+
+The available callbacks are before build, before create, after build and after create:
+  Fabricators.define do
+    before(:build) { |u| u.name = 'global' }
+    fabricator :user do
+      after(:build) { |u| u.name = 'local' }
+      name 'example'
+    end
+  end
