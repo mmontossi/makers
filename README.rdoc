@@ -74,7 +74,7 @@ Or a more verbose one:
 
 == Generators
 
-The idea behind the generators it's to define them outside your fabricators and use them as attributes to ensure readability:
+Define them outside your fabricators and use them as attributes to ensure readability:
   Fabricators.define do
     generator(:email) { |n| "example#{n}@mail.com" }
     generator(:age)
