@@ -16,11 +16,10 @@ Then bundle:
 
 == Methods
 
-There are only four methods available:
+There are three methods available:
   Fabricators.attributes_for
   Fabricators.build
   Fabricators.create
-  Fabricators.generate
 
 To not write "Fabricators" every time you can include the methods in your tests:
   class ActiveSupport::TestCase
@@ -31,13 +30,12 @@ Then you can you just:
   attributes_for
   build
   create
-  generate
 
-In the first three you can pass a hash to override the defaults:
+Is possible to override the defaults passing a hash:
   build :user, name: 'other'
   create :category, title: 'other'
 
-To create lists you use the build and create methods too, just pass the desired size as second parameter:
+To create lists just pass the desired size as second parameter to build and create:
   build :user, 2, name: 'other'
   create :category, 5, title: 'other'
 
@@ -52,7 +50,7 @@ The way you define your fabricators should be very familiar already.
 
 == Inehritance
 
-There are two ways of using it:
+Can be declare nested or separate:
   Fabricators.define do
     fabricator :user do
       name 'example'
@@ -60,25 +58,20 @@ There are two ways of using it:
         email 'example@mail.com'
       end
     end
-  end
-
-Or a more verbose one:
-  Fabricators.define do
-    fabricator :user do
-      name 'example'
-    end
-    fabricator :user_with_email, parent: :user do
-      email 'example@mail.com'
+    fabricator :user_with_age, parent: :user do
+      age 9
     end
   end
 
 == Generators
 
-Define them outside your fabricators and use them as attributes to ensure readability:
+Define them outside your fabricators and use them as attributes:
   Fabricators.define do
+    generator(:name) { 'example' }
     generator(:email) { |n| "example#{n}@mail.com" }
     generator(:age)
     fabricator :user do
+      name
       email
       age
     end
@@ -86,11 +79,11 @@ Define them outside your fabricators and use them as attributes to ensure readab
 
 == Associations
 
-Both one to many and one to many association work more naturally than factory_girl:
+Associations are declared just by the name of the association:
   Fabricators.define do
     fabricator :user do
-      posts # Be default 1 record
-      comments 4 # You can override this if you like
+      posts
+      comments 4 # By default 1, but can be overwritten
     end
     fabricator :post do
       user
@@ -102,9 +95,9 @@ Both one to many and one to many association work more naturally than factory_gi
 
 == Aliases
 
-The aliases are essential to work with generators and associations when there is the need of context:
+The aliases are essential when there is the need of context:
   Fabricators.define do
-    generator(:title, aliases: [:last_name, :first_name]) { 'Example' }
+    generator(:title, aliases: [:first_name, :last_name]) { 'example' }
     fabricators :user, aliases: :author do
       first_name
       last_name
@@ -128,7 +121,7 @@ If you need to use some logic that depends of another attribute you can go:
 
 == Callbacks
 
-The available callbacks are before build, before create, after build and after create:
+The available callbacks are before(:build), before(:create), after(:build) and after(:create):
   Fabricators.define do
     before(:build) { |u| u.name = 'global' }
     fabricator :user do

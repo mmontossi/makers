@@ -2,14 +2,11 @@ module Fabricators
   class Proxy
     include Callbacks
 
-    def initialize(name, options, &block)
+    def initialize(name, parent, &block)
       @name = name
-      @parent = options[:parent]
-      @options = options
-      @block = block
+      @parent = parent
       @attributes = []
-      @loaded = false
-      Boundary.new(name, options, &block)
+      instance_eval &block
     end
 
     def attributes
@@ -55,13 +52,6 @@ module Fabricators
             define_method(name) { args.first }
           end
         end
-      end
-    end
-
-    def load
-      unless @loaded
-        instance_eval &@block
-        @loaded = true
       end
     end
  

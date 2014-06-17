@@ -5,7 +5,6 @@ class AssociationsTest < ActiveSupport::TestCase
   setup do
     Fabricators.define do
       fabricator :user do
-        name 'name'
         fabricator :user_with_built_posts do
           posts
         end
@@ -25,10 +24,6 @@ class AssociationsTest < ActiveSupport::TestCase
   end
 
   test "belongs to association" do
-    user = build(:post, user: build(:user, name: 'other')).user
-    assert_kind_of User, user
-    assert_equal 'other', user.name
-
     user = build(:post_with_built_user).user
     assert_kind_of User, user
     assert user.new_record?
@@ -40,14 +35,14 @@ class AssociationsTest < ActiveSupport::TestCase
 
   test "has many association" do
     posts = build(:user_with_built_posts).posts
-    post = posts.first
     assert_equal 1, posts.size
+    post = posts.first
     assert_kind_of Post, post
     assert post.new_record?
     
     posts = build(:user_with_created_posts).posts
-    post = posts.first
     assert_equal 2, posts.size
+    post = posts.first
     assert_kind_of Post, post
     assert post.persisted?
   end

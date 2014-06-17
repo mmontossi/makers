@@ -6,10 +6,6 @@ module Fabricators
         Fabricators.definitions.find(name, :fabricator).send(method, *args)
       end
     end
- 
-    def generate(name)
-      Fabricators.definitions.find(name, :generator).generate
-    end
 
   end
 end

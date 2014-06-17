@@ -16,10 +16,16 @@ class MergesTest < ActiveSupport::TestCase
  
   test "build instance" do
     assert_equal 'other', build(:user, name: 'other').name
+    build(:user, 3, name: 'other').each do |user|
+      assert_equal 'other', user.name
+    end  
   end
  
   test "create instance" do
     assert_equal 'other', create(:user, name: 'other').name
+    create(:user, 3, name: 'other').each do |user|
+      assert_equal 'other', user.name
+    end  
   end
 
 end

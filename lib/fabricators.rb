@@ -2,7 +2,7 @@ require 'fabricators/callbacks'
 require 'fabricators/definitions'
 require 'fabricators/fabricator'
 require 'fabricators/generator'
-require 'fabricators/boundary'
+require 'fabricators/reader'
 require 'fabricators/proxy'
 require 'fabricators/methods'
 
@@ -16,6 +16,10 @@ module Fabricators
 
     def definitions
       @definitions ||= Definitions.new
+    end
+ 
+    def generate(name)
+      definitions.find(name, :generator).generate
     end
 
   end

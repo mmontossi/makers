@@ -1,18 +1,17 @@
 module Fabricators
   class Fabricator
 
-    attr_reader :proxy
+    attr_reader :options, :proxy
 
     def initialize(name, options={}, &block)
+      @name = name
       @options = options
-      @parent = @options[:parent]
-      @class = @options[:class] ||= name.to_s.classify.constantize
-      raise "Class not found #{name}" unless @class
-      @proxy = Proxy.new(name, options, &block)
+      @block = block
+      @loaded = false
+      Reader.new(name, options, &block)
     end
 
     def attributes_for(options={})
-      proxy.load
       {}.tap do |hash|
         iterate_attributes(options, proxy) do |name, value|
           hash[name] = value
@@ -20,27 +19,46 @@ module Fabricators
       end
     end
 
-    %w(build create).each do |action|
-      define_method action do |*args|
-        proxy.load
+    %w(build create).each do |name|
+      define_method name do |*args|
         options = args.extract_options!
-        method = :"#{action}_one"
+        single_name = :"#{name}_one"
         if args.any?
           [].tap do |list|
             args.first.times do
-              list << send(method, options)
+              list << send(single_name, options)
             end
           end
         else
-          send(method, options)
+          send(single_name, options)
         end
       end
     end
 
+    %w(options attributes_for build create).each do |name|
+      define_method :"#{name}_with_load" do |*args|
+        load
+        send :"#{name}_without_load", *args
+      end
+      alias_method_chain name, :load
+    end
+
     protected
 
+    def load
+      unless @loaded
+        if @options[:parent]
+          @options = Fabricators.definitions.find(@options[:parent], :fabricator).options.merge(@options)
+        end
+        @options[:class] ||= @name.to_s.classify.constantize
+        raise "Class not found for fabricator #{@name}" unless @options[:class]
+        @proxy = Proxy.new(@name, @options[:parent], &@block)
+        @loaded = true
+      end
+    end
+
     def build_one(options={})
-      @class.new.tap do |instance|
+      @options[:class].new.tap do |instance|
         trigger :before_build, instance
         iterate_attributes(options, instance) do |name, value|
           instance.send :"#{name}=", value

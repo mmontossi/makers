@@ -1,5 +1,5 @@
 module Fabricators
-  class Boundary
+  class Reader
 
     def initialize(name, options, &block)
       @name = name

@@ -6,23 +6,44 @@ class InheritanceTest < ActiveSupport::TestCase
     Fabricators.define do
       fabricator :user do
         name 'name'
-        fabricator :other_user do
-          name 'other'
+        fabricator :user_with_age do
+          age 9
         end
+      end
+      fabricator :user_with_email, parent: :user do
+        email 'mail@example.com'
       end
     end
   end
 
   test "return attributes" do
-    assert_equal 'other', attributes_for(:other_user)[:name]
+    user_with_age = attributes_for(:user_with_age)
+    assert_equal 'name', user_with_age[:name]
+    assert_equal 9, user_with_age[:age]
+
+    user_with_email = attributes_for(:user_with_email)
+    assert_equal 'name', user_with_email[:name]
+    assert_equal 'mail@example.com', user_with_email[:email]
   end
 
   test "build instance" do
-    assert_equal 'other', build(:other_user).name
+    user_with_age = build(:user_with_age)
+    assert_equal 'name', user_with_age.name
+    assert_equal 9, user_with_age.age
+ 
+    user_with_email = build(:user_with_email)
+    assert_equal 'name', user_with_email.name
+    assert_equal 'mail@example.com', user_with_email.email
   end
 
   test "create instance" do
-    assert_equal 'other', create(:other_user).name
+    user_with_age = create(:user_with_age)
+    assert_equal 'name', user_with_age.name
+    assert_equal 9, user_with_age.age
+
+    user_with_email = create(:user_with_email)
+    assert_equal 'name', user_with_email.name
+    assert_equal 'mail@example.com', user_with_email.email
   end
 
 end
