@@ -11,6 +11,14 @@ module Fabricators
       Reader.new(name, options, &block)
     end
 
+    def parent
+      @parent ||= begin
+        if @options[:parent]
+          Fabricators.definitions.find(@options[:parent], :fabricator)
+        end
+      end
+    end
+
     def attributes_for(options={})
       {}.tap do |hash|
         iterate_attributes(options, proxy) do |name, value|
@@ -47,12 +55,13 @@ module Fabricators
 
     def load
       unless @loaded
-        if @options[:parent]
-          @options = Fabricators.definitions.find(@options[:parent], :fabricator).options.merge(@options)
+        if parent
+          @options = parent.options.merge(@options)
         end
-        @options[:class] ||= @name.to_s.classify.constantize
-        raise "Class not found for fabricator #{@name}" unless @options[:class]
-        @proxy = Proxy.new(@name, @options[:parent], &@block)
+        unless @options[:class] ||= @name.to_s.classify.constantize
+          raise "Class not found for fabricator #{@name}"
+        end
+        @proxy = Proxy.new(self, &@block)
         @loaded = true
       end
     end

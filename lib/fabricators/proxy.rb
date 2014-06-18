@@ -2,17 +2,16 @@ module Fabricators
   class Proxy
     include Callbacks
 
-    def initialize(name, parent, &block)
-      @name = name
-      @parent = parent
+    def initialize(fabricator, &block)
+      @fabricator = fabricator
       @attributes = []
       instance_eval &block
     end
 
     def attributes
       {}.tap do |hash|
-        if @parent
-          hash.merge! Fabricators.definitions.find(@parent, :fabricator).proxy.attributes
+        if @fabricator.parent
+          hash.merge! @fabricator.parent.proxy.attributes
         end
         @attributes.each do |name|
           hash[name] = send(name)
@@ -22,35 +21,22 @@ module Fabricators
 
     def method_missing(name, *args, &block)
       unless name == :fabricator
+        options = args.extract_options!
+        strategy = options.delete(:strategy) || :build
         if block_given?
-          @attributes.push name
-          class_eval do
-            define_method(name) { block }
-          end
+          logic = block
         elsif fabricator = Fabricators.definitions.find(name, :fabricator) rescue nil
-          @attributes.push name
-          options = args.extract_options!
-          strategy = options.delete(:strategy) || :build
-          class_eval do
-            define_method(name) { fabricator.send(strategy, options) }
-          end
+          logic = -> { fabricator.send(strategy, options) }
         elsif fabricator = Fabricators.definitions.find(name.to_s.singularize.to_sym, :fabricator) rescue nil
-          @attributes.push name
-          options = args.extract_options!
-          strategy = options.delete(:strategy) || :build
-          class_eval do
-            define_method(name) { fabricator.send(strategy, (args.first || 1), options) }
-          end
+          logic = -> { fabricator.send(strategy, (args.first || 1), options) }
         elsif generator = Fabricators.definitions.find(name, :generator) rescue nil
-          @attributes.push name
-          class_eval do
-            define_method(name) { generator.generate }
-          end
+          logic = -> { generator.generate }
         elsif args.any?
-          @attributes.unshift name
-          class_eval do
-            define_method(name) { args.first }
-          end
+          logic = -> { args.first }
+        end
+        if defined? logic
+          @attributes.send (block_given? ? :push : :unshift), name
+          class_eval { define_method(name, logic) }
         end
       end
     end
