@@ -1,7 +1,7 @@
 require 'fabricators/callbacks'
 require 'fabricators/definitions'
 require 'fabricators/fabricator'
-require 'fabricators/generator'
+require 'fabricators/attribute'
 require 'fabricators/reader'
 require 'fabricators/proxy'
 require 'fabricators/methods'
@@ -30,7 +30,7 @@ module Fabricators
     def load_files
       if path
         Dir[path.join('**', '*.rb')].each do |file|
-          load file
+          Fabricators.definitions.instance_eval File.read(file)
         end
       end
     end

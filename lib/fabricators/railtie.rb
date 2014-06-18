@@ -4,6 +4,7 @@ module Fabricators
     initializer 'fabricators' do
       test_framework = config.app_generators.options[:rails][:test_framework]
       config.app_generators.test_framework test_framework, fixture: false, fixture_replacement: :fabricators
+      ActiveSupport::TestCase.send :include, Fabricators::Methods
     end
 
     config.after_initialize do

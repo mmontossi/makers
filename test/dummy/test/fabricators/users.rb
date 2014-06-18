@@ -1,5 +1,3 @@
-Fabricators.define do
-  fabricator :user do
-    name 'name'
-  end
+fabricator :user do
+  name 'name'
 end

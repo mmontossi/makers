@@ -8,7 +8,7 @@ module Fabricators
 
     def reset!
       @fabricators = {}
-      @generators = {}
+      @attributes = {}
       @callbacks = {}
     end
  
@@ -19,10 +19,10 @@ module Fabricators
       end
     end
  
-    def generator(name, first=0, options={}, &block)
-      generator = Generator.new(first, &block)
+    def attribute(name, options={}, &block)
+      attribute = Attribute.new(&block)
       iterate_names name, options do |name|
-        @generators[name] = generator
+        @attributes[name] = attribute
       end
     end
 
@@ -30,8 +30,8 @@ module Fabricators
       case type
       when :fabricator
         @fabricators[name]
-      when :generator
-        @generators[name]
+      when :attribute
+        @attributes[name]
       end.tap do |definition|
         raise "Definition #{name} of type #{type} not found" unless definition
       end

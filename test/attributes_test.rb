@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class GeneratorsTest < ActiveSupport::TestCase
+class AttributesTest < ActiveSupport::TestCase
  
   setup do
     Fabricators.define do
-      generator(:name) { 'name' }
-      generator(:email) { |n| "mail#{n}@example.com" }
-      generator(:age)
+      attribute(:name) { 'name' }
+      attribute(:email) { |n| "mail#{n}@example.com" }
+      attribute(:age)
       fabricator :user do
         name
         age

@@ -1,8 +1,8 @@
 module Fabricators
-  class Generator
+  class Attribute
 
-    def initialize(starts_at, &block)
-      @index = starts_at
+    def initialize(&block)
+      @index = 0
       @block = block
     end
 

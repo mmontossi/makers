@@ -29,8 +29,8 @@ module Fabricators
           logic = -> { fabricator.send(strategy, options) }
         elsif fabricator = Fabricators.definitions.find(name.to_s.singularize.to_sym, :fabricator) rescue nil
           logic = -> { fabricator.send(strategy, (args.first || 1), options) }
-        elsif generator = Fabricators.definitions.find(name, :generator) rescue nil
-          logic = -> { generator.generate }
+        elsif attribute = Fabricators.definitions.find(name, :attribute) rescue nil
+          logic = -> { attribute.generate }
         elsif args.any?
           logic = -> { args.first }
         end

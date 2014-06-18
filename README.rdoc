@@ -21,16 +21,6 @@ There is no need to configure the rails application, the gem will do it automati
 == Methods
 
 There are three methods available:
-  Fabricators.attributes_for
-  Fabricators.build
-  Fabricators.create
-
-To not write "Fabricators" every time you can include the methods in your tests:
-  class ActiveSupport::TestCase
-    include Fabricators::Methods
-  end
-
-Then you can just go:
   attributes_for
   build
   create
@@ -45,90 +35,76 @@ To create lists just pass the desired size as second parameter to build and crea
 
 == Fabricators
 
-The way you define your fabricators should be very familiar already.
-  Fabricators.define do
-    fabricator :user do
-      name 'example'
-    end
+Define them inside test/fabricators/**/*.rb or spec/fabricators/**/*.rb:
+  fabricator :user do
+    name 'example'
   end
 
 == Inehritance
 
 Can be declare nested or separate:
-  Fabricators.define do
-    fabricator :user do
-      name 'example'
-      fabricator :user_with_email do
-        email 'example@mail.com'
-      end
-    end
-    fabricator :user_with_age, parent: :user do
-      age 9
+  fabricator :user do
+    name 'example'
+    fabricator :user_with_email do
+      email 'example@mail.com'
     end
   end
+  fabricator :user_with_age, parent: :user do
+    age 9
+  end
 
-== Generators
+== Attributes
 
-Define them outside your fabricators and use them as attributes:
-  Fabricators.define do
-    generator(:name) { 'example' }
-    generator(:email) { |n| "example#{n}@mail.com" }
-    generator(:age)
-    fabricator :user do
-      name
-      email
-      age
-    end
+Define them outside your fabricators and reference them by name:
+  attribute(:name) { 'example' }
+  attribute(:email) { |n| "example#{n}@mail.com" }
+  attribute(:age)
+  fabricator :user do
+    name
+    email
+    age
   end
 
 == Associations
 
 Associations are declared just by the name of the association:
-  Fabricators.define do
-    fabricator :user do
-      posts
-      comments 4 # By default 1, but can be overwritten
-    end
-    fabricator :post do
-      user
-    end
-    fabricator :comment do
-      user
-    end
+  fabricator :user do
+    posts
+    comments 4 # By default 1, but can be overwritten
+  end
+  fabricator :post do
+    user
+  end
+  fabricator :comment do
+    user
   end
 
 == Aliases
 
 The aliases are essential when there is the need of context:
-  Fabricators.define do
-    generator(:title, aliases: [:first_name, :last_name]) { 'example' }
-    fabricators :user, aliases: :author do
-      first_name
-      last_name
-      comments
-    end
-    fabricators :post, aliases: :comment do
-      title
-      author
-    end
+  attribute(:title, aliases: [:first_name, :last_name]) { 'example' }
+  fabricators :user, aliases: :author do
+    first_name
+    last_name
+    comments
+  end
+  fabricators :post, aliases: :comment do
+    title
+    author
   end
 
 == Dependent attributes
 
 If you need to use some logic that depends of another attribute you can go:
-  Fabricators.define do
-    fabricators :user do
-      name 'example'
-      email { "#{name}@mail.com" }
-    end
+  fabricators :user do
+    name 'example'
+    email { "#{name}@mail.com" }
   end
 
 == Callbacks
 
 The available callbacks are before(:build), before(:create), after(:build) and after(:create):
-  Fabricators.define do
-    before(:build) { |u| u.name = 'global' }
-    fabricator :user do
-      after(:build) { |u| u.name = 'local' }
-    end
+  before(:build) { |u| u.name = 'global' }
+  fabricator :user do
+    after(:build) { |u| u.name = 'local' }
   end
