@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'rails/generators'
 require 'generators/fabricators/model/model_generator'
 
 class FixturesTest < Rails::Generators::TestCase

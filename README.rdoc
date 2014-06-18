@@ -130,6 +130,5 @@ The available callbacks are before(:build), before(:create), after(:build) and a
     before(:build) { |u| u.name = 'global' }
     fabricator :user do
       after(:build) { |u| u.name = 'local' }
-      name 'example'
     end
   end
