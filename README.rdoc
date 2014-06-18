@@ -30,7 +30,7 @@ To not write "Fabricators" every time you can include the methods in your tests:
     include Fabricators::Methods
   end
 
-Then you can you just:
+Then you can just go:
   attributes_for
   build
   create

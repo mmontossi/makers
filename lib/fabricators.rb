@@ -18,10 +18,6 @@ module Fabricators
     def definitions
       @definitions ||= Definitions.new
     end
- 
-    def generate(name)
-      definitions.find(name, :generator).generate
-    end
 
     def paths
       @paths ||= %w(test/fabricators spec/fabricators).map { |path| Rails.root.join(path) }
@@ -31,9 +27,11 @@ module Fabricators
       @path ||= paths.find { |path| Dir.exists? path }
     end
 
-    def populate
-      Dir[path.join('**', '*.rb')].each do |file|
-        load file
+    def load_files
+      if path
+        Dir[path.join('**', '*.rb')].each do |file|
+          load file
+        end
       end
     end
 
