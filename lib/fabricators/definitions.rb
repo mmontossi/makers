@@ -1,7 +1,7 @@
 module Fabricators
   class Definitions
     include Callbacks
-    
+ 
     def initialize
       reset!
     end

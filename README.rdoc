@@ -12,6 +12,10 @@ Put this line in your Gemfile:
 Then bundle:
   $ bundle  
 
+= Configuration
+
+There is no need to configure the rails application, the gem will do it automatically.
+
 = Usage
 
 == Methods
