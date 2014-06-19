@@ -15,6 +15,14 @@ module Fabricators
       definitions.instance_eval &block
     end
 
+    def clean
+      records.pop.destroy until records.empty?
+    end
+
+    def records
+      @records ||= []
+    end
+
     def definitions
       @definitions ||= Definitions.new
     end

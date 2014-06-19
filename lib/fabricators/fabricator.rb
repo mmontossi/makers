@@ -79,7 +79,9 @@ module Fabricators
     def create_one(options={})
       build_one(options).tap do |instance|
         trigger :before_create, instance
-        instance.save
+        if instance.save
+          Fabricators.records << instance
+        end
         trigger :after_create, instance
       end
     end

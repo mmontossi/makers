@@ -3,10 +3,10 @@ module Fabricators
     include Callbacks
  
     def initialize
-      reset!
+      reset
     end
 
-    def reset!
+    def reset
       @fabricators = {}
       @attributes = {}
       @callbacks = {}

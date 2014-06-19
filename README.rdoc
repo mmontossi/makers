@@ -1,3 +1,7 @@
+=== NOTE: From version 0.0.2 and above the syntax has been simplified.
+
+---
+
 {<img src="https://badge.fury.io/rb/fabricators.png" alt="Gem Version" />}[http://badge.fury.io/rb/fabricators] {<img src="https://codeclimate.com/github/museways/fabricators.png" />}[https://codeclimate.com/github/museways/fabricators] {<img src="https://travis-ci.org/museways/fabricators.png?branch=master" alt="Build Status" />}[https://travis-ci.org/museways/fabricators] {<img src="https://gemnasium.com/museways/fabricators.png" alt="Dependency Status" />}[https://gemnasium.com/museways/fabricators]
 
 = Fabricators
@@ -14,7 +18,12 @@ Then bundle:
 
 = Configuration
 
-There is no need to configure the rails application, the gem will do it automatically.
+There is no need to configure anything, all this is done automagically:
+
+- Loading the definitions.
+- Replacing the fixtures generators.
+- Including the methods inside your testing framework.
+- Cleaning the database after each test.
 
 = Usage
 
@@ -40,9 +49,9 @@ Define them inside test/fabricators/**/*.rb or spec/fabricators/**/*.rb:
     name 'example'
   end
 
-== Inehritance
+== Inheritance
 
-Can be declare nested or separate:
+Can be declare nested or separated:
   fabricator :user do
     name 'example'
     fabricator :user_with_email do
@@ -55,7 +64,7 @@ Can be declare nested or separate:
 
 == Attributes
 
-Define them outside your fabricators and reference them by name:
+Define them outside your fabricators reference them by name:
   attribute(:name) { 'example' }
   attribute(:email) { |n| "example#{n}@mail.com" }
   attribute(:age)

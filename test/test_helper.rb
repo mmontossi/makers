@@ -22,5 +22,5 @@ load(File.expand_path('../dummy/db/schema.rb', __FILE__))
 
 # Include methods
 class ActiveSupport::TestCase
-  setup { Fabricators.definitions.reset! }
+  setup { Fabricators.definitions.reset }
 end
