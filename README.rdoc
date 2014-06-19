@@ -18,7 +18,7 @@ Then bundle:
 
 = Configuration
 
-There is no need to configure anything, all is done automatically:
+There is no need to configure anything, all this is done automatically:
 
 - Loading the definitions.
 - Replacing the fixtures generators.
@@ -38,13 +38,13 @@ Is possible to override the defaults passing a hash:
   build :user, name: 'other'
   create :category, title: 'other'
 
-To create lists just pass the desired size as second parameter to build and create:
+To create lists just pass the desired size as second parameter to build and create methods:
   build :user, 2, name: 'other'
   create :category, 5, title: 'other'
 
 == Fabricators
 
-Define them inside test/fabricators or spec/fabricators:
+Define them in a ruby file inside test/fabricators or spec/fabricators folders:
   fabricator :user do
     name 'example'
   end
@@ -76,7 +76,7 @@ Define them outside your fabricators and reference them by name:
 
 == Associations
 
-Associations are declared just by the name of the association:
+Associations are declare just by the name of the association:
   fabricator :user do
     posts
     comments 4 # By default 1, but can be overwritten
@@ -104,7 +104,7 @@ The aliases are essential when there is the need of context:
 
 == Dependent attributes
 
-If you need to use some logic that depends of another attribute you can go:
+If you need to use some logic that depends of another attribute you can use a block:
   fabricators :user do
     name 'example'
     email { "#{name}@mail.com" }
