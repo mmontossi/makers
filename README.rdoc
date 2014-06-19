@@ -1,4 +1,4 @@
-=== NOTE: From version 0.0.2 and above the syntax has been simplified.
+=== NOTE: From version 0.0.2 the syntax has been simplified.
 
 ---
 
@@ -18,7 +18,7 @@ Then bundle:
 
 = Configuration
 
-There is no need to configure anything, all this is done automagically:
+There is no need to configure anything, all is done automatically:
 
 - Loading the definitions.
 - Replacing the fixtures generators.
@@ -44,7 +44,7 @@ To create lists just pass the desired size as second parameter to build and crea
 
 == Fabricators
 
-Define them inside test/fabricators/**/*.rb or spec/fabricators/**/*.rb:
+Define them inside test/fabricators or spec/fabricators:
   fabricator :user do
     name 'example'
   end
@@ -64,7 +64,7 @@ Can be declare nested or separated:
 
 == Attributes
 
-Define them outside your fabricators reference them by name:
+Define them outside your fabricators and reference them by name:
   attribute(:name) { 'example' }
   attribute(:email) { |n| "example#{n}@mail.com" }
   attribute(:age)
