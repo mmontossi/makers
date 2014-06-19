@@ -27,19 +27,23 @@ module Fabricators
       @definitions ||= Definitions.new
     end
 
-    def paths
-      @paths ||= %w(test/fabricators spec/fabricators).map { |path| Rails.root.join(path) }
-    end
-
     def path
-      @path ||= paths.find { |path| Dir.exists? path }
+      @path ||= begin
+        %w(test spec).each do |dir|
+          path = Rails.root.join(dir, 'fabricators')
+          if Dir.exist? path.dirname
+            unless Dir.exist? path
+              Dir.mkdir path 
+            end
+            return path
+          end
+        end
+      end
     end
 
     def load_files
-      if path
-        Dir[path.join('**', '*.rb')].each do |file|
-          Fabricators.definitions.instance_eval File.read(file)
-        end
+      Dir[path.join('**', '*.rb')].each do |file|
+        Fabricators.definitions.instance_eval File.read(file)
       end
     end
 

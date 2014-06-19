@@ -8,6 +8,7 @@ module Fabricators
         fixture_replacement: :fabricators
       )
       if defined? RSpec
+        require 'rspec/rails'
         RSpec.configure do |config|
           config.include Fabricators::Methods
           config.after(:each) do
