@@ -11,7 +11,7 @@ Minimalistic factory alternative inspired in factory_girl.
 = Install
 
 Put this line in your Gemfile:
-  gem 'fabricators'
+  gem 'fabricators', group: [:development, :test]
   
 Then bundle:
   $ bundle  
