@@ -41,7 +41,7 @@ module Fabricators
       @records ||= []
     end
 
-    def load_files
+    def load
       if path
         Dir[path.join('**', '*.rb')].each do |file|
           definitions.instance_eval File.read(file)

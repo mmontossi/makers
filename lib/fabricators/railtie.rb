@@ -26,7 +26,7 @@ module Fabricators
     end
 
     config.after_initialize do
-      Fabricators.load_files
+      Fabricators.load
     end
 
   end
