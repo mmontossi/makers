@@ -1,4 +1,4 @@
-=== NOTE: Important changes has been made in version 0.1.0, read below.
+=== NOTE: Important in version 0.1.0, read below.
 
 ---
 
