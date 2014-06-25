@@ -42,7 +42,7 @@ module Fabricators
           logic = -> { args.first }
         end
         if defined? logic
-          @attributes.send (block_given? ? :append : :prepend), name
+          @attributes.send (block_given? ? :push : :unshift), name
           class_eval { define_method(name, logic) }
         end
       end
