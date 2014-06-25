@@ -8,9 +8,9 @@ Minimalistic factory inspired in factory_girl for rails.
 
 Put this line in your Gemfile:
   gem 'fabricators', group: [:development, :test]
-  
+
 Then bundle:
-  $ bundle  
+  $ bundle
 
 = Configuration
 
@@ -68,7 +68,7 @@ Generates an unique sequence of numbers for the attribute of the fabricator:
 
 == Associations
 
-Associations are used by the name:
+Associations are used by name:
   fabricator :user do
     posts
     comments 4 # You can customize the number of records
