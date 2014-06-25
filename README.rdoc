@@ -109,7 +109,9 @@ The available callbacks are before(:build), before(:create), after(:build) and a
 
 You can declare global callbacks in your test or spec helper as well:
   Fabricators.configure do
-    after(:create) { |o| log o }
+    after(:create) do |object|
+      log object.errors unless object.valid?
+    end
   end
 
 = Credits
