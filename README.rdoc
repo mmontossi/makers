@@ -60,7 +60,7 @@ Can be declare nested or separated:
 
 == Sequences
 
-Generates an unique sequence of numbers for the attribute of that fabricator:
+Generates an unique sequence of numbers for the attribute of the fabricator:
   fabricator :user do
     sequence(:email) { |n| "example#{n}@mail.com" }
     sequence(:age)
@@ -68,7 +68,7 @@ Generates an unique sequence of numbers for the attribute of that fabricator:
 
 == Associations
 
-Associations are declare just by the name of the association:
+Associations are used by the name:
   fabricator :user do
     posts
     comments 4 # You can customize the number of records
@@ -82,7 +82,7 @@ Associations are declare just by the name of the association:
 
 == Aliases
 
-The aliases are essential when there is the need of context:
+The aliases are important when there is the need of context:
   fabricators :user, aliases: :author do
     comments
   end
@@ -93,7 +93,7 @@ The aliases are essential when there is the need of context:
 
 == Dependent attributes
 
-If you need to use some logic that depends of another attribute you can use a block:
+If you need to use some logic that depends of another attribute you can use a block or sequence:
   fabricators :user do
     name 'example'
     email { "#{name}@mail.com" }
