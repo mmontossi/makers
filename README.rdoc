@@ -1,3 +1,7 @@
+=== NOTE: Important changes has been made in version 0.1.0, read below.
+
+---
+
 {<img src="https://badge.fury.io/rb/fabricators.png" alt="Gem Version" />}[http://badge.fury.io/rb/fabricators] {<img src="https://codeclimate.com/github/museways/fabricators.png" />}[https://codeclimate.com/github/museways/fabricators] {<img src="https://travis-ci.org/museways/fabricators.png?branch=master" alt="Build Status" />}[https://travis-ci.org/museways/fabricators]
 
 = Fabricators
