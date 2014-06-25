@@ -3,11 +3,13 @@ require 'test_helper'
 class CallbacksTest < ActiveSupport::TestCase
 
   setup do
-    Fabricators.define do
+    Fabricators.configure do
       before(:build) { |u| u.email = 'build@example.com' }
       after(:build) { |u| u.phone = 1 }
       before(:create) { |u| u.email = 'create@example.com' }
       after(:create) { |u| u.phone = 2 }
+    end
+    Fabricators.define do
       fabricator :user do
         before(:build) { |u| u.name = 'build' }
         after(:build) { |u| u.age = 1 }
@@ -16,7 +18,7 @@ class CallbacksTest < ActiveSupport::TestCase
       end
     end
   end
-  
+
   test "build callbacks" do
     user = build(:user)
     assert_equal 'build@example.com', user.email
@@ -24,7 +26,7 @@ class CallbacksTest < ActiveSupport::TestCase
     assert_equal 'build', user.name
     assert_equal 1, user.age
   end
-  
+
   test "create callbacks" do
     user = create(:user)
     assert_equal 'create@example.com', user.email

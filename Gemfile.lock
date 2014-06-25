@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fabricators (0.0.4)
+    fabricators (0.1.0)
       rails (>= 3.1.0, < 4.2.0)
 
 GEM

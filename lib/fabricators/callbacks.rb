@@ -4,7 +4,7 @@ module Fabricators
     def callbacks
       @callbacks ||= {}
     end
- 
+
     %w(after before).each do |moment|
       define_method moment do |actions, &block|
         actions = [actions] unless actions.is_a? Array

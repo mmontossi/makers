@@ -1,12 +1,12 @@
 module Fabricators
-  class Reader
+  class Fetcher
 
     def initialize(name, options, &block)
       @name = name
       @options = options
       instance_eval &block
     end
-    
+
     def fabricator(name, options={}, &block)
       Fabricators.definitions.fabricator name, @options.merge(options.merge(parent: @name)), &block
     end

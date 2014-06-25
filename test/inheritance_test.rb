@@ -30,7 +30,7 @@ class InheritanceTest < ActiveSupport::TestCase
     user_with_age = build(:user_with_age)
     assert_equal 'name', user_with_age.name
     assert_equal 9, user_with_age.age
- 
+
     user_with_email = build(:user_with_email)
     assert_equal 'name', user_with_email.name
     assert_equal 'mail@example.com', user_with_email.email

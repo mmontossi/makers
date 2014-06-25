@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ['hello@museways.com']
   s.homepage    = 'https://github.com/museways/fabricators'
   s.summary     = 'Fabricators for Rails'
-  s.description = 'Minimalistic factory alternative inspired in factory_girl.'
+  s.description = 'Minimalistic factory inspired in factory_girl for rails.'
   s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.rdoc']

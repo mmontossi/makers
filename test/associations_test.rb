@@ -27,7 +27,7 @@ class AssociationsTest < ActiveSupport::TestCase
     user = build(:post_with_built_user).user
     assert_kind_of User, user
     assert user.new_record?
- 
+
     user = build(:post_with_created_user).user
     assert_kind_of User, user
     assert user.persisted?
@@ -39,7 +39,7 @@ class AssociationsTest < ActiveSupport::TestCase
     post = posts.first
     assert_kind_of Post, post
     assert post.new_record?
- 
+
     posts = build(:user_with_created_posts).posts
     assert_equal 2, posts.size
     post = posts.first

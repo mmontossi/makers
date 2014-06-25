@@ -9,7 +9,7 @@ class ListsTest < ActiveSupport::TestCase
       end
     end
   end
-  
+
   test "build list" do
     list = build(:user, 3)
     assert_equal 3, list.size
@@ -19,7 +19,7 @@ class ListsTest < ActiveSupport::TestCase
       assert_equal 'name', user.name
     end
   end
- 
+
   test "create list" do
     list = create(:user, 3)
     assert_equal 3, list.size

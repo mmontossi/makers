@@ -5,6 +5,7 @@ module Fabricators
     def initialize(fabricator, &block)
       @fabricator = fabricator
       @attributes = []
+      @sequences = {}
       instance_eval &block
     end
 
@@ -19,27 +20,33 @@ module Fabricators
       end
     end
 
+    def sequence(name, &block)
+      @attributes << name
+      @sequences[name] = Sequence.new(&block)
+      class_eval do
+        define_method(name) { @sequences[name] }
+      end
+    end
+
     def method_missing(name, *args, &block)
       unless name == :fabricator
         options = args.extract_options!
         strategy = options.delete(:strategy) || :build
         if block_given?
           logic = block
-        elsif fabricator = Fabricators.definitions.find(name, :fabricator) rescue nil
+        elsif fabricator = Fabricators.definitions.find(name) rescue nil
           logic = -> { fabricator.send(strategy, options) }
-        elsif fabricator = Fabricators.definitions.find(name.to_s.singularize.to_sym, :fabricator) rescue nil
+        elsif fabricator = Fabricators.definitions.find(name.to_s.singularize.to_sym) rescue nil
           logic = -> { fabricator.send(strategy, (args.first || 1), options) }
-        elsif attribute = Fabricators.definitions.find(name, :attribute) rescue nil
-          logic = -> { attribute.generate }
         elsif args.any?
           logic = -> { args.first }
         end
         if defined? logic
-          @attributes.send (block_given? ? :push : :unshift), name
+          @attributes.send (block_given? ? :append : :prepend), name
           class_eval { define_method(name, logic) }
         end
       end
     end
- 
+
   end
 end

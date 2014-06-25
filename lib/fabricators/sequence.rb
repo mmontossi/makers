@@ -1,15 +1,15 @@
 module Fabricators
-  class Attribute
+  class Sequence
 
     def initialize(&block)
       @index = 0
       @block = block
     end
 
-    def generate
+    def generate(context)
       @index += 1
       if @block
-        @block.call(@index)
+        context.instance_exec @index, &@block
       else
         @index
       end

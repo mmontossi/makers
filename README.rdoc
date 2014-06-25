@@ -1,12 +1,8 @@
-=== NOTE: From version 0.0.2 the syntax has been simplified.
-
----
-
-{<img src="https://badge.fury.io/rb/fabricators.png" alt="Gem Version" />}[http://badge.fury.io/rb/fabricators] {<img src="https://codeclimate.com/github/museways/fabricators.png" />}[https://codeclimate.com/github/museways/fabricators] {<img src="https://travis-ci.org/museways/fabricators.png?branch=master" alt="Build Status" />}[https://travis-ci.org/museways/fabricators] {<img src="https://gemnasium.com/museways/fabricators.png" alt="Dependency Status" />}[https://gemnasium.com/museways/fabricators]
+{<img src="https://badge.fury.io/rb/fabricators.png" alt="Gem Version" />}[http://badge.fury.io/rb/fabricators] {<img src="https://codeclimate.com/github/museways/fabricators.png" />}[https://codeclimate.com/github/museways/fabricators] {<img src="https://travis-ci.org/museways/fabricators.png?branch=master" alt="Build Status" />}[https://travis-ci.org/museways/fabricators]
 
 = Fabricators
 
-Minimalistic factory alternative inspired in factory_girl.
+Minimalistic factory inspired in factory_girl for rails.
 
 = Install
 
@@ -18,7 +14,7 @@ Then bundle:
 
 = Configuration
 
-There is no need to configure anything, all this is done automatically:
+There is no need to configure anything, all this is done automatically for rspec and minitest:
 
 - Loading the definitions.
 - Replacing the fixtures generators.
@@ -62,16 +58,12 @@ Can be declare nested or separated:
     age 9
   end
 
-== Attributes
+== Sequences
 
-Define them outside your fabricators and reference them by name:
-  attribute(:name) { 'example' }
-  attribute(:email) { |n| "example#{n}@mail.com" }
-  attribute(:age)
+Generates an unique sequence of numbers for the attribute of that fabricator:
   fabricator :user do
-    name
-    email
-    age
+    sequence(:email) { |n| "example#{n}@mail.com" }
+    sequence(:age)
   end
 
 == Associations
@@ -79,7 +71,7 @@ Define them outside your fabricators and reference them by name:
 Associations are declare just by the name of the association:
   fabricator :user do
     posts
-    comments 4 # By default 1, but can be overwritten
+    comments 4 # You can customize the number of records
   end
   fabricator :post do
     user
@@ -91,10 +83,7 @@ Associations are declare just by the name of the association:
 == Aliases
 
 The aliases are essential when there is the need of context:
-  attribute(:title, aliases: [:first_name, :last_name]) { 'example' }
   fabricators :user, aliases: :author do
-    first_name
-    last_name
     comments
   end
   fabricators :post, aliases: :comment do
@@ -108,12 +97,25 @@ If you need to use some logic that depends of another attribute you can use a bl
   fabricators :user do
     name 'example'
     email { "#{name}@mail.com" }
+    sequence(:username) { |n| "#{name}-#{n}" }
   end
 
 == Callbacks
 
 The available callbacks are before(:build), before(:create), after(:build) and after(:create):
-  before(:build) { |u| u.name = 'global' }
   fabricator :user do
-    after(:build) { |u| u.name = 'local' }
+    after(:build) { |u| u.name = 'sample' }
   end
+
+You can declare global callbacks in your test or spec helper as well:
+  Fabricators.configure do
+    after(:create) { |o| log o }
+  end
+
+= Credits
+
+This gem is maintained and funded by museways[http://museways.com].
+
+= License
+
+It is free software, and may be redistributed under the terms specified in the MIT-LICENSE file.

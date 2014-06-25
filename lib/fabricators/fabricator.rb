@@ -8,13 +8,13 @@ module Fabricators
       @options = options
       @block = block
       @loaded = false
-      Reader.new(name, options, &block)
+      Fetcher.new(name, options, &block)
     end
 
     def parent
       @parent ||= begin
         if @options[:parent]
-          Fabricators.definitions.find(@options[:parent], :fabricator)
+          Fabricators.definitions.find(@options[:parent])
         end
       end
     end
@@ -87,7 +87,7 @@ module Fabricators
     end
 
     def trigger(name, instance)
-      globals = (Fabricators.definitions.callbacks[name] || [])
+      globals = (Fabricators.configuration.callbacks[name] || [])
       locals = (proxy.callbacks[name] || [])
       (globals + locals).each do |callback|
         callback.call instance
@@ -96,7 +96,16 @@ module Fabricators
 
     def iterate_attributes(options={}, context)
       proxy.attributes.merge(options).each do |name, value|
-        yield name, (value.is_a?(Proc) ? context.instance_eval(&value) : value)
+        case value
+        when Proc
+          context.instance_eval &value
+        when Sequence
+          value.generate context
+        else
+          value
+        end.tap do |value|
+          yield name, value
+        end
       end
     end
 

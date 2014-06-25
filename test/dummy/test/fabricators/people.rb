@@ -1,0 +1,2 @@
+fabricator :person do
+end

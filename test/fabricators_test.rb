@@ -15,7 +15,7 @@ class FabricatorsTest < ActiveSupport::TestCase
     assert_kind_of Hash, hash
     assert_equal 'name', hash[:name]
   end
- 
+
   test "build instance" do
     record = build(:user)
     assert_kind_of User, record
@@ -29,5 +29,5 @@ class FabricatorsTest < ActiveSupport::TestCase
     assert record.persisted?
     assert_equal 'name', record.name
   end
- 
+
 end

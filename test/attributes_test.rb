@@ -1,36 +1,26 @@
 require 'test_helper'
 
 class AttributesTest < ActiveSupport::TestCase
- 
+
   setup do
     Fabricators.define do
-      attribute(:name) { 'name' }
-      attribute(:email) { |n| "mail#{n}@example.com" }
-      attribute(:age)
       fabricator :user do
-        name
-        age
-        email
+        sequence(:email) { |n| "mail#{n}@example.com" }
+        sequence(:age)
       end
     end
   end
 
-  test "static generator" do
-    assert_equal 'name', attributes_for(:user)[:name]
-    assert_equal 'name', build(:user).name
-    assert_equal 'name', create(:user).name
-  end
-
-  test "block generator" do
+  test "block sequence" do
     assert_equal 'mail1@example.com', attributes_for(:user)[:email]
     assert_equal 'mail2@example.com', build(:user).email
     assert_equal 'mail3@example.com', create(:user).email
   end
 
-  test "number generator" do
+  test "numeric sequence" do
     assert_equal 1, attributes_for(:user)[:age]
     assert_equal 2, build(:user).age
     assert_equal 3, create(:user).age
   end
- 
+
 end
