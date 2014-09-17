@@ -12,8 +12,9 @@ gem 'fabricators', group: [:development, :test]
 ```
 
 Then bundle:
-
-    $ bundle
+```
+$ bundle
+```
 
 ## Configuration
 
