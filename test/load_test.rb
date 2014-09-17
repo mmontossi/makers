@@ -6,7 +6,7 @@ class LoadTest < ActiveSupport::TestCase
     Fabricators.load
   end 
 
-  test "find files" do
+  test 'find files' do
     assert build(:user)
   end
 

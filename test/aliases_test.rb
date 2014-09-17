@@ -11,7 +11,7 @@ class AliasesTest < ActiveSupport::TestCase
     end
   end
 
-  test "aliases" do
+  test 'aliases' do
     assert_kind_of Fabricators::Fabricator, Fabricators.definitions.find(:user)
     assert_kind_of Fabricators::Fabricator, Fabricators.definitions.find(:owner)
     assert_kind_of Fabricators::Fabricator, Fabricators.definitions.find(:author)

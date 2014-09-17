@@ -11,7 +11,7 @@ class CleanTest < ActiveSupport::TestCase
     Fabricators.clean
   end
 
-  test "clean records created" do
+  test 'clean records created' do
     assert_equal 0, User.count
   end
 

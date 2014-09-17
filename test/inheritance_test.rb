@@ -16,7 +16,7 @@ class InheritanceTest < ActiveSupport::TestCase
     end
   end
 
-  test "return attributes" do
+  test 'return attributes' do
     user_with_age = attributes_for(:user_with_age)
     assert_equal 'name', user_with_age[:name]
     assert_equal 9, user_with_age[:age]
@@ -26,7 +26,7 @@ class InheritanceTest < ActiveSupport::TestCase
     assert_equal 'mail@example.com', user_with_email[:email]
   end
 
-  test "build instance" do
+  test 'build instance' do
     user_with_age = build(:user_with_age)
     assert_equal 'name', user_with_age.name
     assert_equal 9, user_with_age.age
@@ -36,7 +36,7 @@ class InheritanceTest < ActiveSupport::TestCase
     assert_equal 'mail@example.com', user_with_email.email
   end
 
-  test "create instance" do
+  test 'create instance' do
     user_with_age = create(:user_with_age)
     assert_equal 'name', user_with_age.name
     assert_equal 9, user_with_age.age

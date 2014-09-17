@@ -19,7 +19,7 @@ class CallbacksTest < ActiveSupport::TestCase
     end
   end
 
-  test "build callbacks" do
+  test 'build callbacks' do
     user = build(:user)
     assert_equal 'build@example.com', user.email
     assert_equal 1, user.phone
@@ -27,7 +27,7 @@ class CallbacksTest < ActiveSupport::TestCase
     assert_equal 1, user.age
   end
 
-  test "create callbacks" do
+  test 'create callbacks' do
     user = create(:user)
     assert_equal 'create@example.com', user.email
     assert_equal 2, user.phone

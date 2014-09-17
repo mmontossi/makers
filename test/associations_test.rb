@@ -23,7 +23,7 @@ class AssociationsTest < ActiveSupport::TestCase
     end
   end
 
-  test "belongs to association" do
+  test 'belongs to association' do
     user = build(:post_with_built_user).user
     assert_kind_of User, user
     assert user.new_record?
@@ -33,7 +33,7 @@ class AssociationsTest < ActiveSupport::TestCase
     assert user.persisted?
   end
 
-  test "has many association" do
+  test 'has many association' do
     posts = build(:user_with_built_posts).posts
     assert_equal 1, posts.size
     post = posts.first
