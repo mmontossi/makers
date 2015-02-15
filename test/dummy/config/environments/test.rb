@@ -13,7 +13,11 @@ Dummy::Application.configure do
   config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance.
-  config.serve_static_assets  = true
+  if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR >= 2
+    config.serve_static_files = false
+  else
+    config.serve_static_assets = false
+  end
   config.static_cache_control = 'public, max-age=3600'
 
   # Show full error reports and disable caching.
@@ -36,4 +40,8 @@ Dummy::Application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR >= 2
+    config.active_support.test_order = :random
+  end
 end
