@@ -1,9 +1,9 @@
-module Fabricators
+module Makers
   class Proxy
     include Callbacks
 
-    def initialize(fabricator, &block)
-      @fabricator = fabricator
+    def initialize(maker, &block)
+      @maker = maker
       @attributes = []
       @sequences = {}
       instance_eval &block
@@ -11,8 +11,8 @@ module Fabricators
 
     def attributes
       {}.tap do |hash|
-        if @fabricator.parent
-          hash.merge! @fabricator.parent.proxy.attributes
+        if @maker.parent
+          hash.merge! @maker.parent.proxy.attributes
         end
         @attributes.each do |name|
           hash[name] = send(name)
@@ -29,15 +29,15 @@ module Fabricators
     end
 
     def method_missing(name, *args, &block)
-      unless name == :fabricator
+      unless name == :maker
         options = args.extract_options!
         strategy = options.delete(:strategy) || :build
         if block_given?
           logic = block
-        elsif fabricator = Fabricators.definitions.find(name) rescue nil
-          logic = -> { fabricator.send(strategy, options) }
-        elsif fabricator = Fabricators.definitions.find(name.to_s.singularize.to_sym) rescue nil
-          logic = -> { fabricator.send(strategy, (args.first || 1), options) }
+        elsif maker = Makers.definitions.find(name) rescue nil
+          logic = -> { maker.send(strategy, options) }
+        elsif maker = Makers.definitions.find(name.to_s.singularize.to_sym) rescue nil
+          logic = -> { maker.send(strategy, (args.first || 1), options) }
         elsif args.any?
           logic = -> { args.first }
         end

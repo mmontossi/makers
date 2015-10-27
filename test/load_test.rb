@@ -3,7 +3,7 @@ require 'test_helper'
 class LoadTest < ActiveSupport::TestCase
 
   setup do
-    Fabricators.load
+    Makers.load
   end 
 
   test 'find files' do

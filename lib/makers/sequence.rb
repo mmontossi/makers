@@ -1,4 +1,4 @@
-module Fabricators
+module Makers
   class Sequence
 
     def initialize(&block)

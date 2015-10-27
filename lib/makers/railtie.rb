@@ -1,32 +1,32 @@
-module Fabricators
+module Makers
   class Railtie < Rails::Railtie
 
-    initializer 'fabricators' do
+    initializer 'makers' do
       config.app_generators.test_framework(
         config.app_generators.options[:rails][:test_framework],
         fixture: false,
-        fixture_replacement: :fabricators
+        fixture_replacement: :makers
       )
       if defined? RSpec
         require 'rspec/rails'
         RSpec.configure do |config|
-          config.include Fabricators::Methods
+          config.include Makers::Methods
           config.after(:each) do
-            Fabricators.clean
+            Makers.clean
           end
         end
       else
         class ActiveSupport::TestCase
-          include Fabricators::Methods
+          include Makers::Methods
           teardown do
-            Fabricators.clean
+            Makers.clean
           end
         end
       end
     end
 
     config.after_initialize do
-      Fabricators.load
+      Makers.load
     end
 
   end

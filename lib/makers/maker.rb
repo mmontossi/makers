@@ -1,5 +1,5 @@
-module Fabricators
-  class Fabricator
+module Makers
+  class Maker
 
     attr_reader :options, :proxy
 
@@ -14,7 +14,7 @@ module Fabricators
     def parent
       @parent ||= begin
         if @options[:parent]
-          Fabricators.definitions.find(@options[:parent])
+          Makers.definitions.find(@options[:parent])
         end
       end
     end
@@ -59,7 +59,7 @@ module Fabricators
           @options = parent.options.merge(@options)
         end
         unless @options[:class] ||= @name.to_s.classify.constantize
-          raise "Class not found for fabricator #{@name}"
+          raise "Class not found for maker #{@name}"
         end
         @proxy = Proxy.new(self, &@block)
         @loaded = true
@@ -80,14 +80,14 @@ module Fabricators
       build_one(options).tap do |instance|
         trigger :before_create, instance
         if instance.save
-          Fabricators.records << instance
+          Makers.records << instance
         end
         trigger :after_create, instance
       end
     end
 
     def trigger(name, instance)
-      globals = (Fabricators.configuration.callbacks[name] || [])
+      globals = (Makers.configuration.callbacks[name] || [])
       locals = (proxy.callbacks[name] || [])
       (globals + locals).each do |callback|
         callback.call instance

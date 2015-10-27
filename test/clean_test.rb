@@ -3,12 +3,12 @@ require 'test_helper'
 class CleanTest < ActiveSupport::TestCase
 
   setup do
-    Fabricators.define do
-      fabricator :user do
+    Makers.define do
+      maker :user do
       end
     end
     create :user, 5
-    Fabricators.clean
+    Makers.clean
   end
 
   test 'clean records' do

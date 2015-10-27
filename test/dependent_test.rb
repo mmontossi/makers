@@ -3,8 +3,8 @@ require 'test_helper'
 class DependentTest < ActiveSupport::TestCase
 
   setup do
-    Fabricators.define do
-      fabricator :user do
+    Makers.define do
+      maker :user do
         email { "#{name}@example.com" }
         sequence(:username) { |n| "#{name}-#{n}" }
         name 'name'

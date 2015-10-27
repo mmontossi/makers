@@ -1,10 +1,10 @@
 require 'test_helper'
 
-class FabricatorsTest < ActiveSupport::TestCase
+class MakersTest < ActiveSupport::TestCase
 
   setup do
-    Fabricators.define do
-      fabricator :user do
+    Makers.define do
+      maker :user do
         name 'name'
       end
     end

@@ -3,8 +3,8 @@ require 'test_helper'
 class AliasesTest < ActiveSupport::TestCase
 
   setup do
-    Fabricators.define do
-      fabricator :user, aliases: [:owner, :author] do
+    Makers.define do
+      maker :user, aliases: [:owner, :author] do
         name 'name'
         phone
       end
@@ -12,9 +12,9 @@ class AliasesTest < ActiveSupport::TestCase
   end
 
   test 'aliases' do
-    assert_kind_of Fabricators::Fabricator, Fabricators.definitions.find(:user)
-    assert_kind_of Fabricators::Fabricator, Fabricators.definitions.find(:owner)
-    assert_kind_of Fabricators::Fabricator, Fabricators.definitions.find(:author)
+    assert_kind_of Makers::Maker, Makers.definitions.find(:user)
+    assert_kind_of Makers::Maker, Makers.definitions.find(:owner)
+    assert_kind_of Makers::Maker, Makers.definitions.find(:author)
   end
 
 end

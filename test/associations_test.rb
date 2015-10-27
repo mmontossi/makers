@@ -3,20 +3,20 @@ require 'test_helper'
 class AssociationsTest < ActiveSupport::TestCase
 
   setup do
-    Fabricators.define do
-      fabricator :user do
-        fabricator :user_with_built_posts do
+    Makers.define do
+      maker :user do
+        maker :user_with_built_posts do
           posts
         end
-        fabricator :user_with_created_posts do
+        maker :user_with_created_posts do
           posts 2, strategy: :create
         end
       end
-      fabricator :post do
-        fabricator :post_with_built_user do
+      maker :post do
+        maker :post_with_built_user do
           user
         end
-        fabricator :post_with_created_user do
+        maker :post_with_created_user do
           user strategy: :create
         end
       end

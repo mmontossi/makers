@@ -1,4 +1,4 @@
-module Fabricators
+module Makers
   class Fetcher
 
     def initialize(name, options, &block)
@@ -7,8 +7,8 @@ module Fabricators
       instance_eval &block
     end
 
-    def fabricator(name, options={}, &block)
-      Fabricators.definitions.fabricator name, @options.merge(options.merge(parent: @name)), &block
+    def maker(name, options={}, &block)
+      Makers.definitions.maker name, @options.merge(options.merge(parent: @name)), &block
     end
 
     def method_missing(name, *args, &block)

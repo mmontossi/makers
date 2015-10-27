@@ -3,14 +3,14 @@ require 'test_helper'
 class CallbacksTest < ActiveSupport::TestCase
 
   setup do
-    Fabricators.configure do
+    Makers.configure do
       before(:build) { |u| u.email = 'build@example.com' }
       after(:build) { |u| u.phone = 1 }
       before(:create) { |u| u.email = 'create@example.com' }
       after(:create) { |u| u.phone = 2 }
     end
-    Fabricators.define do
-      fabricator :user do
+    Makers.define do
+      maker :user do
         before(:build) { |u| u.name = 'build' }
         after(:build) { |u| u.age = 1 }
         before(:create) { |u| u.name = 'create' }

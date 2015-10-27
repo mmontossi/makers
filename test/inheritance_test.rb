@@ -3,14 +3,14 @@ require 'test_helper'
 class InheritanceTest < ActiveSupport::TestCase
 
   setup do
-    Fabricators.define do
-      fabricator :user do
+    Makers.define do
+      maker :user do
         name 'name'
-        fabricator :user_with_age do
+        maker :user_with_age do
           age 9
         end
       end
-      fabricator :user_with_email, parent: :user do
+      maker :user_with_email, parent: :user do
         email 'mail@example.com'
       end
     end

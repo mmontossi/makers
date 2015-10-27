@@ -1,4 +1,4 @@
-module Fabricators
+module Makers
   module Callbacks
 
     def callbacks

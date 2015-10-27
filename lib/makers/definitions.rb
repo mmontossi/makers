@@ -1,4 +1,4 @@
-module Fabricators
+module Makers
   class Definitions
 
     def initialize
@@ -6,18 +6,18 @@ module Fabricators
     end
 
     def reset
-      @fabricators = {}
+      @makers = {}
     end
 
-    def fabricator(name, options={}, &block)
-      fabricator = Fabricator.new(name, options, &block)
+    def maker(name, options={}, &block)
+      maker = Maker.new(name, options, &block)
       iterate_names name, options do |name|
-        @fabricators[name] = fabricator
+        @makers[name] = maker
       end
     end
 
     def find(name)
-      @fabricators[name].tap do |definition|
+      @makers[name].tap do |definition|
         raise "Definition #{name} not found" unless definition
       end
     end

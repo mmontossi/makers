@@ -1,14 +1,14 @@
-require 'fabricators/callbacks'
-require 'fabricators/definitions'
-require 'fabricators/configuration'
-require 'fabricators/fabricator'
-require 'fabricators/sequence'
-require 'fabricators/fetcher'
-require 'fabricators/proxy'
-require 'fabricators/methods'
-require 'fabricators/railtie'
+require 'makers/callbacks'
+require 'makers/definitions'
+require 'makers/configuration'
+require 'makers/maker'
+require 'makers/sequence'
+require 'makers/fetcher'
+require 'makers/proxy'
+require 'makers/methods'
+require 'makers/railtie'
 
-module Fabricators
+module Makers
   extend Methods
   class << self
 
@@ -50,7 +50,7 @@ module Fabricators
     end
 
     def path
-      @path ||= %w(test spec).map{ |dir| Rails.root.join(dir) }.find{ |path| Dir.exist?(path) }.try(:join, 'fabricators')
+      @path ||= %w(test spec).map{ |dir| Rails.root.join(dir) }.find{ |path| Dir.exist?(path) }.try(:join, 'makers')
     end
 
   end

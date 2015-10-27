@@ -3,8 +3,8 @@ require 'test_helper'
 class AttributesTest < ActiveSupport::TestCase
 
   setup do
-    Fabricators.define do
-      fabricator :user do
+    Makers.define do
+      maker :user do
         sequence(:email) { |n| "mail#{n}@example.com" }
         sequence(:age)
       end

@@ -3,8 +3,8 @@ require 'test_helper'
 class ListsTest < ActiveSupport::TestCase
 
   setup do
-    Fabricators.define do
-      fabricator :user do
+    Makers.define do
+      maker :user do
         name 'name'
       end
     end

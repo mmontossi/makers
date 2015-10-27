@@ -1,2 +1,0 @@
-fabricator :person do
-end

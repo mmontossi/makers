@@ -1,6 +1,6 @@
-[![Gem Version](https://badge.fury.io/rb/fabricators.svg)](http://badge.fury.io/rb/fabricators) [![Code Climate](https://codeclimate.com/github/museways/fabricators/badges/gpa.svg)](https://codeclimate.com/github/museways/fabricators) [![Build Status](https://travis-ci.org/museways/fabricators.svg?branch=0.1.0)](https://travis-ci.org/museways/fabricators) [![Dependency Status](https://gemnasium.com/museways/fabricators.svg)](https://gemnasium.com/museways/fabricators)
+[![Gem Version](https://badge.fury.io/rb/makers.svg)](http://badge.fury.io/rb/makers) [![Code Climate](https://codeclimate.com/github/museways/makers/badges/gpa.svg)](https://codeclimate.com/github/museways/makers) [![Build Status](https://travis-ci.org/museways/makers.svg?branch=0.1.0)](https://travis-ci.org/museways/makers) [![Dependency Status](https://gemnasium.com/museways/makers.svg)](https://gemnasium.com/museways/makers)
 
-# Fabricators
+# Makers
 
 Minimalistic factory inspired in factory_girl for rails.
 
@@ -8,7 +8,7 @@ Minimalistic factory inspired in factory_girl for rails.
 
 Put this line in your Gemfile:
 ```ruby
-gem 'fabricators', group: [:development, :test]
+gem 'makers', group: [:development, :test]
 ```
 
 Then bundle:
@@ -48,11 +48,11 @@ build :user, 2, name: 'other'
 create :category, 5, title: 'other'
 ```
 
-### Fabricators
+### Makers
 
-Define them in a ruby file inside test/fabricators or spec/fabricators folders:
+Define them in a ruby file inside test/makers or spec/makers folders:
 ```ruby
-fabricator :user do
+maker :user do
   name 'example'
 end
 ```
@@ -61,22 +61,22 @@ end
 
 Can be declare nested or separated:
 ```ruby
-fabricator :user do
+maker :user do
   name 'example'
-  fabricator :user_with_email do
+  maker :user_with_email do
     email 'example@mail.com'
   end
 end
-fabricator :user_with_age, parent: :user do
+maker :user_with_age, parent: :user do
   age 9
 end
 ```
 
 ### Sequences
 
-Generates an unique sequence of numbers for the attribute of the fabricator:
+Generates an unique sequence of numbers for the attribute of the maker:
 ```ruby
-fabricator :user do
+maker :user do
   sequence(:email) { |n| "example#{n}@mail.com" }
   sequence(:age)
 end
@@ -86,14 +86,14 @@ end
 
 Associations are used by name:
 ```ruby
-fabricator :user do
+maker :user do
   posts
   comments 4 # You can customize the number of records
 end
-fabricator :post do
+maker :post do
   user
 end
-fabricator :comment do
+maker :comment do
   user
 end
 ```
@@ -102,10 +102,10 @@ end
 
 The aliases are important when there is the need of context:
 ```ruby
-fabricators :user, aliases: :author do
+maker :user, aliases: :author do
   comments
 end
-fabricators :post, aliases: :comment do
+maker :post, aliases: :comment do
   title
   author
 end
@@ -115,7 +115,7 @@ end
 
 If you need to use some logic that depends of another attribute you can use a block or sequence:
 ```ruby
-fabricators :user do
+maker :user do
   name 'example'
   email { "#{name}@mail.com" }
   sequence(:username) { |n| "#{name}-#{n}" }
@@ -126,14 +126,14 @@ end
 
 The available callbacks are before(:build), before(:create), after(:build) and after(:create):
 ```ruby
-fabricator :user do
+maker :user do
   after(:build) { |u| u.name = 'sample' }
 end
 ```
 
 You can declare global callbacks in your test or spec helper as well:
 ```ruby
-Fabricators.configure do
+Makers.configure do
   after(:create) do |object|
     log object.errors unless object.valid?
   end

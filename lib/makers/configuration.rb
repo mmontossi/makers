@@ -1,4 +1,4 @@
-module Fabricators
+module Makers
   class Configuration
     include Callbacks
 
