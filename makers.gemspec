@@ -7,9 +7,9 @@ require 'makers/version'
 Gem::Specification.new do |s|
   s.name        = 'makers'
   s.version     = Makers::VERSION
-  s.authors     = ['Museways']
-  s.email       = ['hello@museways.com']
-  s.homepage    = 'https://github.com/museways/makers'
+  s.authors     = ['mmontossi']
+  s.email       = ['mmontossi@buyin.io']
+  s.homepage    = 'https://github.com/mmontossi/makers'
   s.summary     = 'Makers for Rails'
   s.description = 'Minimalistic factory inspired in factory_girl for rails.'
   s.license     = 'MIT'
