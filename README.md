@@ -1,6 +1,6 @@
 [![Gem Version](https://badge.fury.io/rb/makers.svg)](http://badge.fury.io/rb/makers)
 [![Code Climate](https://codeclimate.com/github/mmontossi/makers/badges/gpa.svg)](https://codeclimate.com/github/mmontossi/makers)
-[![Build Status](https://travis-ci.org/mmontossi/makers.svg](https://travis-ci.org/mmontossi/makers)
+[![Build Status](https://travis-ci.org/mmontossi/makers.svg)](https://travis-ci.org/mmontossi/makers)
 [![Dependency Status](https://gemnasium.com/mmontossi/makers.svg)](https://gemnasium.com/mmontossi/makers)
 
 # Makers
