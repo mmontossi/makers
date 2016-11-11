@@ -1,2 +1,0 @@
-maker :person do
-end

@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.name        = 'makers'
   s.version     = Makers::VERSION
   s.authors     = ['mmontossi']
-  s.email       = ['mmontossi@buyin.io']
+  s.email       = ['mmontossi@gmail.com']
   s.homepage    = 'https://github.com/mmontossi/makers'
   s.summary     = 'Makers for Rails'
   s.description = 'Minimalistic factory inspired in factory_girl for rails.'
@@ -19,12 +19,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.0.0'
 
-  s.add_dependency 'rails', (ENV['RAILS_VERSION'] ? "~> #{ENV['RAILS_VERSION']}" : ['>= 4.0.0', '< 4.3.0'])
+  s.add_dependency 'rails', ['>= 4.2.0', '< 4.3.0']
 
-  if RUBY_PLATFORM == 'java'
-    s.add_development_dependency 'activerecord-jdbcsqlite3-adapter', '~> 1.3'
-    s.add_development_dependency 'jruby-openssl', '~> 0.9'
-  else
-    s.add_development_dependency 'sqlite3', '~> 1.3'
-  end
+  s.add_development_dependency 'pg', '~> 0.18'
 end

@@ -13,21 +13,20 @@
 
 ActiveRecord::Schema.define(version: 20140615180954) do
 
-  create_table "posts", force: true do |t|
-    t.string   "content"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "posts", force: :cascade do |t|
+    t.string  "content"
+    t.integer "user_id"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "username"
-    t.string   "name"
-    t.string   "email"
-    t.integer  "age"
-    t.integer  "phone"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "users", force: :cascade do |t|
+    t.string  "username"
+    t.string  "name"
+    t.string  "email"
+    t.integer "age"
+    t.integer "phone"
   end
 
 end

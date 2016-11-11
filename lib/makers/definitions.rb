@@ -1,42 +1,33 @@
 module Makers
   class Definitions
 
-    def initialize
-      reset
-    end
-
-    def reset
-      @makers = {}
-    end
-
-    def maker(name, options={}, &block)
-      maker = Maker.new(name, options, &block)
-      iterate_names name, options do |name|
-        @makers[name] = maker
-      end
+    def contains?(name)
+      registry.has_key? name
     end
 
     def find(name)
-      @makers[name].tap do |definition|
-        raise "Definition #{name} not found" unless definition
+      if contains?(name)
+        registry[name]
+      else
+        raise "Definition #{name} not found"
       end
     end
 
-    protected
-
-    def iterate_names(name, options)
-      names = [name]
-      if aliases = options[:aliases]
-        case aliases
-        when Array
-          names |= aliases
+    def add(names, *args)
+      maker = Maker.new(*args)
+      names.each do |name|
+        if contains?(name)
+          raise "Maker #{name} already registered"
         else
-          names << aliases
+          registry[name] = maker
         end
       end
-      names.each do |name|
-        yield name
-      end
+    end
+
+    private
+
+    def registry
+      @registry ||= {}
     end
 
   end
