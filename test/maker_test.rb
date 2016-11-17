@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MakersTest < ActiveSupport::TestCase
+class MakerTest < ActiveSupport::TestCase
 
   test 'overrides' do
     assert_equal 'other', build(:user, name: 'other').name
