@@ -5,7 +5,15 @@
 
 # Makers
 
-Minimalistic factory inspired in factory_girl for rails.
+Minimalistic factories to replace fixtures in rails.
+
+## Why
+
+I did this gem to add some enhancements to my projects:
+
+- Enforce better practices removing unnecessary options.
+- Avoid the need to use another method to create lists.
+- Quicker syntax to handle associations.
 
 ## Install
 
@@ -21,12 +29,19 @@ $ bundle
 
 ## Configuration
 
-There is no need to configure anything, all this is done automatically for rspec and minitest:
+Generate the configuration file:
+```
+bundle exec rails g makers:install
+```
 
-* Loading the definitions.
-* Replacing the fixtures generators.
-* Including the methods inside your testing framework.
-* Cleaning the database after each test.
+Define makers in test/makers.rb or spec/makers.rb:
+```ruby
+Makers.define do
+  maker :user do
+    name 'example'
+  end
+end
+```
 
 ## Usage
 
@@ -34,7 +49,6 @@ There is no need to configure anything, all this is done automatically for rspec
 
 There are three methods available:
 ```ruby
-attributes_for
 build
 create
 ```
@@ -51,27 +65,17 @@ build :user, 2, name: 'other'
 create :category, 5, title: 'other'
 ```
 
-### Makers
-
-Define them in a ruby file inside test/makers or spec/makers folders:
-```ruby
-maker :user do
-  name 'example'
-end
-```
-
 ### Inheritance
 
-Can be declare nested or separated:
+Just concatenate makers:
 ```ruby
-maker :user do
-  name 'example'
-  maker :user_with_email do
-    email 'example@mail.com'
+Makers.define do
+  maker :user do
+    name 'example'
+    maker :user_with_email do
+      email 'example@mail.com'
+    end
   end
-end
-maker :user_with_age, parent: :user do
-  age 9
 end
 ```
 
@@ -79,9 +83,11 @@ end
 
 Generates an unique sequence of numbers for the attribute of the maker:
 ```ruby
-maker :user do
-  sequence(:email) { |n| "example#{n}@mail.com" }
-  sequence(:age)
+Makers.define do
+  maker :user do
+    sequence(:email) { |n| "example#{n}@mail.com" }
+    sequence(:phone)
+  end
 end
 ```
 
@@ -89,15 +95,14 @@ end
 
 Associations are used by name:
 ```ruby
-maker :user do
-  posts
-  comments 4 # You can customize the number of records
-end
-maker :post do
-  user
-end
-maker :comment do
-  user
+Makers.define do
+  maker :user do
+    posts
+    comments 4 # You can customize the number of records
+  end
+  maker :comment do
+    user
+  end
 end
 ```
 
@@ -105,40 +110,26 @@ end
 
 The aliases are important when there is the need of context:
 ```ruby
-maker :user, aliases: :author do
-  comments
-end
-maker :post, aliases: :comment do
-  title
-  author
+Makers.define do
+  maker :user, aliases: :author do
+    comments
+  end
+  maker :post, aliases: :comment do
+    title
+    author
+  end
 end
 ```
 
 ### Dependent attributes
 
-If you need to use some logic that depends of another attribute you can use a block or sequence:
+If you need to use some logic that depends of another attribute you can use a block:
 ```ruby
-maker :user do
-  name 'example'
-  email { "#{name}@mail.com" }
-  sequence(:username) { |n| "#{name}-#{n}" }
-end
-```
-
-### Callbacks
-
-The available callbacks are before(:build), before(:create), after(:build) and after(:create):
-```ruby
-maker :user do
-  after(:build) { |u| u.name = 'sample' }
-end
-```
-
-You can declare global callbacks in your test or spec helper as well:
-```ruby
-Makers.configure do
-  after(:create) do |object|
-    log object.errors unless object.valid?
+Makers.define do
+  maker :user do
+    name 'example'
+    email { "#{name}@mail.com" }
+    sequence(:username) { |n| "#{name}-#{n}" }
   end
 end
 ```

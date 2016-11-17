@@ -1,6 +1,6 @@
 Makers.define do
 
-  maker :user, aliases: %i(owner) do
+  maker :user, aliases: :owner do
     name 'name'
     sequence(:username) { name }
     sequence(:email) { |n| "mail#{n}@example.com" }

@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ['mmontossi@gmail.com']
   s.homepage    = 'https://github.com/mmontossi/makers'
   s.summary     = 'Makers for Rails'
-  s.description = 'Minimalistic factory inspired in factory_girl for rails.'
+  s.description = 'Minimalistic factories to replace fixtures in rails.'
   s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']

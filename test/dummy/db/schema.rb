@@ -11,14 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140615180954) do
+ActiveRecord::Schema.define(version: 20161115150024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "exchanges", force: :cascade do |t|
+    t.string   "service",    limit: 30
+    t.string   "from",       limit: 3
+    t.string   "to",         limit: 3
+    t.decimal  "rate",                  precision: 24, scale: 12
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+  end
+
+  add_index "exchanges", ["from", "to"], name: "index_exchanges_on_from_and_to", using: :btree
+
+  create_table "plans", force: :cascade do |t|
+    t.decimal  "monthly_price",            precision: 24, scale: 6
+    t.decimal  "annually_price",           precision: 24, scale: 6
+    t.string   "currency",       limit: 3
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+  end
+
   create_table "posts", force: :cascade do |t|
-    t.string  "content"
     t.integer "user_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.decimal  "price",                    precision: 24, scale: 6
+    t.string   "price_currency", limit: 3
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
   end
 
   create_table "users", force: :cascade do |t|
