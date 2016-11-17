@@ -47,7 +47,7 @@ end
 
 ### Methods
 
-There are three methods available:
+There are two methods available:
 ```ruby
 build
 create
@@ -59,7 +59,7 @@ build :user, name: 'other'
 create :category, title: 'other'
 ```
 
-To create lists just pass the desired size as second parameter to build and create methods:
+To create lists just pass the desired size as second parameter:
 ```ruby
 build :user, 2, name: 'other'
 create :category, 5, title: 'other'
@@ -81,7 +81,7 @@ end
 
 ### Sequences
 
-Generates an unique sequence of numbers for the attribute of the maker:
+Generates an unique sequence of numbers for an attribute:
 ```ruby
 Makers.define do
   maker :user do
@@ -93,14 +93,17 @@ end
 
 ### Associations
 
-Associations are used by name:
+Associations are defined by name or by the association method:
 ```ruby
 Makers.define do
   maker :user do
     posts
-    comments 4 # You can customize the number of records
+    comments 4, strategy: :create
   end
   maker :comment do
+    association :user
+  end
+  maker :post do
     user
   end
 end
@@ -108,7 +111,7 @@ end
 
 ### Aliases
 
-The aliases are important when there is the need of context:
+Aliases can be assigned in the initialization:
 ```ruby
 Makers.define do
   maker :user, aliases: :author do
