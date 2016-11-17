@@ -9,7 +9,7 @@ Minimalistic factories to replace fixtures in rails.
 
 ## Why
 
-I did this gem to add some enhancements to my projects:
+I did this gem to:
 
 - Enforce better practices removing unnecessary options.
 - Avoid the need to use another method to create lists.
