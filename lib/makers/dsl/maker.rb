@@ -1,5 +1,5 @@
 module Makers
-  module DSL
+  module Dsl
     class Maker
 
       def initialize(name, options={}, &block)
@@ -22,7 +22,7 @@ module Makers
         options.delete :aliases
         options.merge! overrides
         options.merge! parent: @name
-        DSL::Maker.new name, options, &block
+        Dsl::Maker.new name, options, &block
       end
 
       def sequence(name, &block)

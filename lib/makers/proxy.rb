@@ -6,7 +6,7 @@ module Makers
     end
 
     def maker(*args, &block)
-      DSL::Maker.new *args, &block
+      Dsl::Maker.new *args, &block
     end
 
   end

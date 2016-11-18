@@ -12,7 +12,7 @@ Minimalistic factories to replace fixtures in rails.
 I did this gem to:
 
 - Enforce better practices removing unnecessary options.
-- Avoid the need to use another method to create lists.
+- Avoid the need to use another method to build/create lists.
 - Quicker syntax to handle associations.
 
 ## Install
@@ -29,9 +29,9 @@ $ bundle
 
 ## Configuration
 
-Generate the configuration file:
+Run the install generator:
 ```
-bundle exec rails g makers:install
+$ bundle exec rails g makers:install
 ```
 
 Define makers in test/makers.rb or spec/makers.rb:
@@ -47,7 +47,7 @@ end
 
 ### Methods
 
-There are two methods available:
+There are two methods available in tests:
 ```ruby
 build
 create
@@ -117,7 +117,7 @@ Makers.define do
   maker :user, aliases: :author do
     comments
   end
-  maker :post, aliases: :comment do
+  maker :post, aliases: %i(comment article) do
     title
     author
   end
