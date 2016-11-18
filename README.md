@@ -37,9 +37,11 @@ $ bundle exec rails g makers:install
 Define makers in test/makers.rb or spec/makers.rb:
 ```ruby
 Makers.define do
+
   maker :user do
     name 'example'
   end
+
 end
 ```
 
@@ -70,12 +72,15 @@ create :category, 5, title: 'other'
 Just concatenate makers:
 ```ruby
 Makers.define do
+
   maker :user do
     name 'example'
+
     maker :user_with_email do
       email 'example@mail.com'
     end
   end
+
 end
 ```
 
@@ -84,10 +89,12 @@ end
 Generates an unique sequence of numbers for an attribute:
 ```ruby
 Makers.define do
+
   maker :user do
     sequence(:email) { |n| "example#{n}@mail.com" }
     sequence(:phone)
   end
+
 end
 ```
 
@@ -96,16 +103,20 @@ end
 Associations are defined by name or by the association method:
 ```ruby
 Makers.define do
+
   maker :user do
     posts
     comments 4, strategy: :create
   end
+
   maker :comment do
     association :user
   end
+
   maker :post do
     user
   end
+
 end
 ```
 
@@ -114,13 +125,16 @@ end
 Aliases can be assigned in the initialization:
 ```ruby
 Makers.define do
+
   maker :user, aliases: :author do
     comments
   end
+
   maker :post, aliases: %i(comment article) do
     title
     author
   end
+
 end
 ```
 
@@ -129,11 +143,13 @@ end
 If you need to use some logic that depends of another attribute you can use a block:
 ```ruby
 Makers.define do
+
   maker :user do
     name 'example'
     email { "#{name}@mail.com" }
     sequence(:username) { |n| "#{name}-#{n}" }
   end
+
 end
 ```
 
