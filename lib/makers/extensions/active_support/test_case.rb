@@ -2,6 +2,7 @@ module Makers
   module Extensions
     module ActiveSupport
       module TestCase
+        extend ActiveSupport::Concern
 
         %w(build create).each do |method|
           define_method method do |name, *args|
