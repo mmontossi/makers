@@ -27,7 +27,9 @@ Then bundle:
 $ bundle
 ```
 
-## Configuration
+## Usage
+
+### Configuration
 
 Run the install generator:
 ```
@@ -44,8 +46,6 @@ Makers.define do
 
 end
 ```
-
-## Usage
 
 ### Methods
 
