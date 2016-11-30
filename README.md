@@ -49,7 +49,7 @@ end
 
 ### Methods
 
-There are two methods available in tests:
+There are two new methods available in tests:
 ```ruby
 build
 create
