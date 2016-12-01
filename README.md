@@ -27,25 +27,20 @@ Then bundle:
 $ bundle
 ```
 
-## Usage
+## Configuration
 
-### Configuration
-
-Run the install generator:
+Generate de definitions file:
 ```
 $ bundle exec rails g makers:install
 ```
 
-Define makers in test/makers.rb or spec/makers.rb:
+The file will be put in test/makers.rb or spec/makers.rb depending on your test framework:
 ```ruby
 Makers.define do
-
-  maker :user do
-    name 'example'
-  end
-
 end
 ```
+
+## Usage
 
 ### Methods
 
