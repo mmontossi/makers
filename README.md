@@ -42,26 +42,6 @@ end
 
 ## Usage
 
-### Methods
-
-There are two new methods available in tests:
-```ruby
-build
-create
-```
-
-Is possible to override the defaults passing a hash:
-```ruby
-build :user, name: 'other'
-create :category, title: 'other'
-```
-
-To create lists just pass the desired size as second parameter:
-```ruby
-build :user, 2, name: 'other'
-create :category, 5, title: 'other'
-```
-
 ### Inheritance
 
 Just concatenate makers:
@@ -146,6 +126,26 @@ Makers.define do
   end
 
 end
+```
+
+### Methods
+
+There are two new methods available in tests:
+```ruby
+build
+create
+```
+
+Is possible to override the defaults passing a hash:
+```ruby
+build :user, name: 'other'
+create :category, title: 'other'
+```
+
+To create lists just pass the desired size as second parameter:
+```ruby
+build :user, 2, name: 'other'
+create :category, 5, title: 'other'
 ```
 
 ## Credits
