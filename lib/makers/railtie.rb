@@ -1,11 +1,20 @@
 module Makers
   class Railtie < Rails::Railtie
 
-    initializer :makers do
+    initializer 'makers.extensions' do
+      ActiveSupport::TestCase.include(
+        Makers::Extensions::ActiveSupport::TestCase
+      )
+    end
+
+    initializer 'makers.replace_fixtures' do
       config.app_generators.test_framework(
         config.app_generators.options[:rails][:test_framework],
         fixture: false
       )
+    end
+
+    config.after_initialize do
       if Dir.exist?(Rails.root.join('spec'))
         directory = 'spec'
       else
@@ -15,7 +24,6 @@ module Makers
       if File.exist?(path)
         load path
       end
-      ActiveSupport::TestCase.include Makers::Extensions::ActiveSupport::TestCase
     end
 
   end

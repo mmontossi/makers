@@ -1,4 +1,3 @@
-require 'generators/makers/install_generator'
 require 'makers/dsl/maker'
 require 'makers/extensions/active_support/test_case'
 require 'makers/definitions'
