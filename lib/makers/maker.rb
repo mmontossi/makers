@@ -1,12 +1,14 @@
 module Makers
   class Maker
 
-    attr_reader :options, :assignments, :object
+    attr_reader :assignments, :associations, :sequences, :options
+    attr_accessor :disabled_association
 
-    def initialize(options, assignments)
-      @options = options
+    def initialize(assignments, associations, sequences, options)
       @assignments = assignments
-      @object = build_object
+      @associations = associations
+      @sequences = sequences
+      @options = options
     end
 
     %w(build create).each do |name|
@@ -26,11 +28,23 @@ module Makers
     end
 
     def attributes
-      hash = {}
+      all = assignments
       if options.has_key?(:parent)
-        hash.merge! Makers.definitions.find(options[:parent]).attributes
+        all.reverse_merge! Makers.definitions.find(options[:parent]).assignments
       end
-      assignments.keys.each do |name|
+      if disabled_association
+        associations.each do |name, class_name|
+          if disabled_association == class_name
+            all[name] = -> { nil }
+          end
+        end
+      end
+      object = Object.new
+      all.each do |name, block|
+        object.define_singleton_method name, &block
+      end
+      hash = {}
+      all.keys.each do |name|
         hash[name] = object.send(name)
       end
       hash
@@ -50,14 +64,6 @@ module Makers
       instance = build_one(overrides)
       instance.save
       instance
-    end
-
-    def build_object
-      klass = Class.new
-      assignments.each do |name, logic|
-        klass.send :define_method, name, &logic
-      end
-      klass.new
     end
 
   end

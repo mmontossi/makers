@@ -15,6 +15,8 @@ Makers.define do
     end
   end
 
-  maker :post
+  maker :post do
+    association :user, maker: :owner
+  end
 
 end

@@ -1,12 +1,8 @@
 module Makers
   class Definitions
 
-    def contains?(name)
-      registry.has_key? name
-    end
-
     def find(name)
-      if contains?(name)
+      if registry.has_key?(name)
         registry[name]
       else
         raise "Definition #{name} not found"
@@ -16,7 +12,7 @@ module Makers
     def add(names, *args)
       maker = Maker.new(*args)
       names.each do |name|
-        if contains?(name)
+        if registry.has_key?(name)
           raise "Maker #{name} already registered"
         else
           registry[name] = maker
