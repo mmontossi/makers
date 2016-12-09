@@ -7,7 +7,7 @@ module Makers
       )
     end
 
-    initializer 'makers.replace_fixtures' do
+    initializer 'makers.test_framework' do
       config.app_generators.test_framework(
         config.app_generators.options[:rails][:test_framework],
         fixture: false
