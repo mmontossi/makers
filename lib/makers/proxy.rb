@@ -9,5 +9,9 @@ module Makers
       Dsl::Maker.new *args, &block
     end
 
+    def trait(*args, &block)
+      Dsl::Trait.new *args, &block
+    end
+
   end
 end

@@ -3,17 +3,24 @@ module Makers
     class Maker
 
       def initialize(name, options={}, &block)
+        class_name = options[:class_name] ||= name.to_s.classify
+        @model = class_name.constantize
         @name = name
-        @options = options.reverse_merge(class_name: name.to_s.classify)
-        @class = @options[:class_name].constantize
         @assignments = {}
         @associations = {}
         @sequences = {}
+        @options = options
         if block_given?
           instance_eval &block
         end
+        Array(options[:traits]).each do |id|
+          block = Makers.traits.find(id)
+          instance_eval &block
+        end
         Makers.definitions.add(
-          [@name] + Array(@options[:aliases]),
+          [name] + Array(options[:aliases]),
+          @name,
+          @model,
           @assignments,
           @associations,
           @sequences,
@@ -22,9 +29,9 @@ module Makers
       end
 
       def maker(name, overrides={}, &block)
-        byebug unless @options.is_a?(Hash)
         options = @options.dup
         options.delete :aliases
+        options.delete :traits
         options.merge! overrides
         options.merge! parent: @name
         Dsl::Maker.new name, options, &block
@@ -49,8 +56,8 @@ module Makers
         options = args.extract_options!
         lookup = (options[:maker] || name)
         action = (options[:strategy] || :build)
-        reflection = @class.reflections[name.to_s]
-        class_name = @class.name
+        reflection = @model.reflections[name.to_s]
+        class_name = @model.name
         case reflection.macro
         when :belongs_to,:has_one
           @assignments[name] = -> {
@@ -71,7 +78,7 @@ module Makers
       end
 
       def method_missing(name, *args, &block)
-        if @class.reflections.has_key?(name.to_s)
+        if @model.reflections.has_key?(name.to_s)
           association name, *args
         elsif block_given?
           @assignments[name] = block

@@ -1,10 +1,12 @@
 module Makers
   class Maker
 
-    attr_reader :assignments, :associations, :sequences, :options
+    attr_reader :name, :model, :assignments, :associations, :sequences, :options
     attr_accessor :disabled_association
 
-    def initialize(assignments, associations, sequences, options)
+    def initialize(name, model, assignments, associations, sequences, options)
+      @name = name
+      @model = model
       @assignments = assignments
       @associations = associations
       @sequences = sequences
@@ -28,7 +30,7 @@ module Makers
     end
 
     def attributes
-      all = assignments
+      all = assignments.dup
       if options.has_key?(:parent)
         all.reverse_merge! Makers.definitions.find(options[:parent]).assignments
       end
@@ -53,7 +55,7 @@ module Makers
     private
 
     def build_one(overrides={})
-      instance = options[:class_name].constantize.new
+      instance = model.new
       attributes.merge(overrides).each do |name, value|
         instance.send "#{name}=", value
       end

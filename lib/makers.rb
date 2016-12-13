@@ -1,9 +1,11 @@
 require 'makers/dsl/maker'
+require 'makers/dsl/trait'
 require 'makers/extensions/active_support/test_case'
 require 'makers/definitions'
 require 'makers/maker'
 require 'makers/proxy'
 require 'makers/railtie'
+require 'makers/traits'
 require 'makers/version'
 
 module Makers
@@ -11,6 +13,10 @@ module Makers
 
     def definitions
       @definitions ||= Definitions.new
+    end
+
+    def traits
+      @traits ||= Traits.new
     end
 
     def define(&block)

@@ -1,5 +1,9 @@
 Makers.define do
 
+  trait :user do
+    association :user, maker: :owner
+  end
+
   maker :user, aliases: :owner do
     name 'name'
     sequence(:username) { name }
@@ -15,8 +19,6 @@ Makers.define do
     end
   end
 
-  maker :post do
-    association :user, maker: :owner
-  end
+  maker :post, traits: :user
 
 end

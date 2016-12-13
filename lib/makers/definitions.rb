@@ -1,21 +1,21 @@
 module Makers
   class Definitions
 
-    def find(name)
-      if registry.has_key?(name)
-        registry[name]
+    def find(id)
+      if registry.has_key?(id)
+        registry[id]
       else
-        raise "Definition #{name} not found"
+        raise "Definition #{id} not found"
       end
     end
 
-    def add(names, *args)
+    def add(ids, *args)
       maker = Maker.new(*args)
-      names.each do |name|
-        if registry.has_key?(name)
-          raise "Maker #{name} already registered"
+      ids.each do |id|
+        if registry.has_key?(id)
+          raise "Maker #{id} already registered"
         else
-          registry[name] = maker
+          registry[id] = maker
         end
       end
     end
