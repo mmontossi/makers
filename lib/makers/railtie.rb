@@ -6,7 +6,13 @@ module Makers
       fixture: false
     )
 
-    config.before_initialize do
+    initializer 'makers.active_support' do
+      ActiveSupport::TestCase.include(
+        Makers::Extensions::ActiveSupport::TestCase
+      )
+    end
+
+    config.after_initialize do
       if Dir.exist?(Rails.root.join('spec'))
         directory = 'spec'
       else
@@ -16,12 +22,6 @@ module Makers
       if File.exist?(path)
         load path
       end
-    end
-
-    initializer 'makers.active_support' do
-      ActiveSupport::TestCase.include(
-        Makers::Extensions::ActiveSupport::TestCase
-      )
     end
 
   end
