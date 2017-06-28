@@ -2,7 +2,7 @@ require 'test_helper'
 
 class MakerTest < ActiveSupport::TestCase
 
-  test 'overrides' do
+  test 'methods' do
     assert_equal 'other', build(:user, name: 'other').name
     list = build(:user, 3, name: 'other')
     3.times do |index|
@@ -16,6 +16,11 @@ class MakerTest < ActiveSupport::TestCase
     end
   end
 
+  test 'blocks' do
+    assert_equal 'name', build(:user).username
+    assert_equal 'name', create(:user).username
+  end
+
   test 'inheritance' do
     user = build(:user_with_age)
     assert_equal 'name', user.name
@@ -24,11 +29,6 @@ class MakerTest < ActiveSupport::TestCase
     user = create(:user_with_age)
     assert_equal 'name', user.name
     assert_equal 9, user.age
-  end
-
-  test 'dependent' do
-    assert_equal 'name', build(:user).username
-    assert_equal 'name', create(:user).username
   end
 
   test 'sequences' do
@@ -50,11 +50,12 @@ class MakerTest < ActiveSupport::TestCase
 
     posts = build(:user_with_posts).posts
     assert_equal 2, posts.size
-    post = posts.first
-    assert post.persisted?
+    posts.each do |post|
+      assert post.persisted?
+    end
   end
 
-  test 'definitions' do
+  test 'registry' do
     assert_raises do
       Makers.find :wrong
     end
