@@ -1,5 +1,3 @@
-class Post < ActiveRecord::Base
-
-  belongs_to :user
-
+class Post < ApplicationRecord
+  belongs_to :user, optional: true
 end

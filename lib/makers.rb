@@ -19,6 +19,14 @@ module Makers
       @traits ||= Traits.new
     end
 
+    def directory
+      if Dir.exist?(Rails.root.join('spec'))
+        'spec'
+      else
+        'test'
+      end
+    end
+
     def define(&block)
       Proxy.new &block
     end

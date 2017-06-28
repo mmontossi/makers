@@ -6,7 +6,7 @@ Makers.define do
 
   maker :user, aliases: :owner do
     name 'name'
-    sequence(:username) { name }
+    username { name }
     sequence(:email) { |n| "mail#{n}@example.com" }
     sequence(:phone)
     posts

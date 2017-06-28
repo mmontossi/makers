@@ -64,7 +64,7 @@ module Makers
 
     def create_one(overrides={})
       instance = build_one(overrides)
-      instance.save
+      instance.save!
       instance
     end
 

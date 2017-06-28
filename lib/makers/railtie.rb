@@ -13,12 +13,7 @@ module Makers
     end
 
     config.after_initialize do
-      if Dir.exist?(Rails.root.join('spec'))
-        directory = 'spec'
-      else
-        directory = 'test'
-      end
-      path = Rails.root.join("#{directory}/makers.rb")
+      path = Rails.root.join("#{Makers.directory}/makers.rb")
       if File.exist?(path)
         load path
       end
