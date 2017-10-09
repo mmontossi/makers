@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.name        = 'makers'
   s.version     = Makers::VERSION
   s.authors     = ['mmontossi']
-  s.email       = ['mmontossi@museways.com']
-  s.homepage    = 'https://github.com/mmontossi/makers'
+  s.email       = ['hi@museways.com']
+  s.homepage    = 'https://github.com/museways/makers'
   s.summary     = 'Makers for Rails'
   s.description = 'Minimalistic factories to replace fixtures in rails.'
   s.license     = 'MIT'

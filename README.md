@@ -1,7 +1,7 @@
 [![Gem Version](https://badge.fury.io/rb/makers.svg)](http://badge.fury.io/rb/makers)
-[![Code Climate](https://codeclimate.com/github/mmontossi/makers/badges/gpa.svg)](https://codeclimate.com/github/mmontossi/makers)
-[![Build Status](https://travis-ci.org/mmontossi/makers.svg)](https://travis-ci.org/mmontossi/makers)
-[![Dependency Status](https://gemnasium.com/mmontossi/makers.svg)](https://gemnasium.com/mmontossi/makers)
+[![Code Climate](https://codeclimate.com/github/museways/makers/badges/gpa.svg)](https://codeclimate.com/github/museways/makers)
+[![Build Status](https://travis-ci.org/museways/makers.svg)](https://travis-ci.org/museways/makers)
+[![Dependency Status](https://gemnasium.com/museways/makers.svg)](https://gemnasium.com/museways/makers)
 
 # Makers
 
@@ -156,7 +156,7 @@ I will mainly ensure compatibility to Rails, AWS, PostgreSQL, Redis, Elasticsear
 
 ## Credits
 
-This gem is maintained and funded by [mmontossi](https://github.com/mmontossi).
+This gem is maintained and funded by [museways](https://github.com/museways).
 
 ## License
 
