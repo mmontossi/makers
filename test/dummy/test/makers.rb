@@ -1,6 +1,6 @@
 Makers.define do
 
-  trait :user do
+  trait :with_user do
     association :user, maker: :owner
   end
 
@@ -19,6 +19,6 @@ Makers.define do
     end
   end
 
-  maker :post, traits: :user
+  maker :post
 
 end

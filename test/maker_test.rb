@@ -37,9 +37,9 @@ class MakerTest < ActiveSupport::TestCase
   end
 
   test 'aliases' do
-    user = Makers.definitions.find(:user)
+    user = Makers.definitions.get(:user)
     assert_kind_of Makers::Maker, user
-    assert_equal user, Makers.definitions.find(:owner)
+    assert_equal user, Makers.definitions.get(:owner)
   end
 
   test 'associations' do
@@ -55,9 +55,14 @@ class MakerTest < ActiveSupport::TestCase
     end
   end
 
+  test 'traits' do
+    post = build(:post, :with_user)
+    assert_kind_of User, post.user
+  end
+
   test 'registry' do
     assert_raises do
-      Makers.find :wrong
+      Makers.get :wrong
     end
     assert_raises do
       Makers.add :user

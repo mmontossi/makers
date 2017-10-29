@@ -6,11 +6,11 @@ module Makers
     end
 
     def maker(*args, &block)
-      Dsl::Maker.new *args, &block
+      Makers.definitions.add Dsl::Maker.new(*args, &block)
     end
 
     def trait(*args, &block)
-      Dsl::Trait.new *args, &block
+      Makers.traits.add *args, &block
     end
 
   end

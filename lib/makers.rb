@@ -1,29 +1,32 @@
-require 'makers/dsl/maker'
+require 'makers/errors'
+require 'makers/collections/base'
+require 'makers/collections/assignments'
+require 'makers/collections/definitions'
+require 'makers/collections/traits'
 require 'makers/dsl/trait'
+require 'makers/dsl/maker'
 require 'makers/extensions/active_support/test_case'
-require 'makers/definitions'
 require 'makers/maker'
 require 'makers/proxy'
 require 'makers/railtie'
-require 'makers/traits'
 require 'makers/version'
 
 module Makers
   class << self
 
     def definitions
-      @definitions ||= Definitions.new
+      @definitions ||= Collections::Definitions.new
     end
 
     def traits
-      @traits ||= Traits.new
+      @traits ||= Collections::Traits.new
     end
 
     def directory
-      if Dir.exist?(Rails.root.join('spec'))
-        'spec'
-      else
+      if Dir.exist?(Rails.root.join('test'))
         'test'
+      else
+        'spec'
       end
     end
 

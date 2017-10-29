@@ -6,7 +6,7 @@ module Makers
 
         %w(build create).each do |method|
           define_method method do |name, *args|
-            Makers.definitions.find(name).send method, *args
+            Makers.definitions.get(name).send method, *args
           end
         end
 
